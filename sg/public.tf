@@ -1,5 +1,5 @@
 resource "aws_security_group_rule" "ingress_tcp_ipv4" {
-  foreach = toset(var.ports)
+  for_each = toset(var.ports)
 
   type        = "ingress"
   from_port   = each.value
@@ -23,7 +23,7 @@ resource "aws_security_group_rule" "ingress_tcp_ipv6" {
 }
 
 resource "aws_security_group_rule" "ingress_udp_ipv4" {
-  foreach = toset(var.udp_ports)
+  for_each = toset(var.udp_ports)
 
   type        = "ingress"
   from_port   = each.value
