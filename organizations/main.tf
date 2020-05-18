@@ -3,6 +3,13 @@ resource "aws_organizations_account" "account" {
 
   name  = each.value.name
   email = each.value.mail
+
+  lifecycle {
+    ignore_changes = [
+      name,
+      email,
+    ]
+  }
 }
 
 resource "aws_organizations_policy_attachment" "deny_route53_zone_delete" {
