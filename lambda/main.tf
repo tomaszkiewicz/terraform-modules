@@ -3,7 +3,7 @@ resource "aws_lambda_function" "lambda_source_dir" {
 
   function_name    = var.name
   filename         = data.archive_file.lambda_source.output_path
-  source_code_hash = filesha256(data.archive_file.lambda_source.output_path)
+  source_code_hash = data.archive_file.lambda_source.output_base64sha256
   role             = module.lambda_role.arn
   handler          = var.handler
   timeout          = var.timeout
@@ -32,7 +32,7 @@ resource "aws_lambda_function" "lambda_external" {
 
   function_name    = var.name
   filename         = data.archive_file.lambda_source.output_path
-  source_code_hash = filesha256(data.archive_file.lambda_source.output_path)
+  source_code_hash = data.archive_file.lambda_source.output_base64sha256
   role             = module.lambda_role.arn
   handler          = var.handler
   timeout          = var.timeout

@@ -17,3 +17,7 @@ output "name" {
 output "iam_role_arn" {
   value = module.lambda_role.iam_role_arn
 }
+
+output "invoke_arn" {
+  value = join("", aws_lambda_function.lambda_external.*.invoke_arn, aws_lambda_function.lambda_source_dir.*.invoke_arn)
+}

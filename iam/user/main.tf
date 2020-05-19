@@ -10,6 +10,10 @@ resource "aws_iam_user_policy_attachment" "attachment" {
 
   user       = var.name
   policy_arn = each.value
+
+  depends_on = [
+    aws_iam_user.user,
+  ]
 }
 
 resource "aws_iam_user_policy" "policy" {
@@ -17,4 +21,8 @@ resource "aws_iam_user_policy" "policy" {
 
   user   = var.name
   policy = var.policy
+
+  depends_on = [
+    aws_iam_user.user,
+  ]
 }
