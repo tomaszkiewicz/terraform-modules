@@ -6,6 +6,7 @@ variable "bucket_name" { default = "" }
 variable "skip_www" { default = false }
 variable "create_dns_record" { default = true }
 
+variable "index_document_on_404" { default = false }
 variable "index_document" { default = "index.html" }
 variable "error_document" { default = "error404/index.html" }
 variable "external_bucket_name" { default = "" }

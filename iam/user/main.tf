@@ -1,18 +1,20 @@
 resource "aws_iam_user" "user" {
+  count = var.create ? 1 : 0
+
   name = var.name
   path = "/"
 }
 
 resource "aws_iam_user_policy_attachment" "attachment" {
-  for_each = toset(var.attach_policies)
+  for_each = var.create ? toset(var.attach_policies) : []
 
-  user       = aws_iam_user.user.name
+  user       = var.name
   policy_arn = each.value
 }
 
 resource "aws_iam_user_policy" "policy" {
-  count = var.policy == "" ? 0 : 1
+  count = var.policy != "" && var.create ? 1 : 0
 
-  user = aws_iam_user.user.name
+  user   = var.name
   policy = var.policy
 }

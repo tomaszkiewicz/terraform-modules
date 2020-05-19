@@ -15,10 +15,10 @@ resource "aws_cloudfront_distribution" "website" {
     }
   }
 
-  aliases = [
+  aliases = [ for a in [
     var.domain_name,
     var.skip_www ? "" : format("%s%s", "www.", var.domain_name)
-  ]
+  ]: a if a != "" ]
 
   enabled             = true
   price_class         = "PriceClass_100"
@@ -93,6 +93,8 @@ resource "aws_cloudfront_distribution" "website" {
   custom_error_response {
     error_caching_min_ttl = 0
     error_code            = 404
+    response_code         = var.index_document_on_404 ? 200 : null
+    response_page_path    = var.index_document_on_404 ? "/${var.index_document}" : null
   }
 
   custom_error_response {
