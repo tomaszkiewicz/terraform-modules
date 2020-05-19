@@ -5,10 +5,10 @@ locals {
   )
 }
 
-module "deployer" {
+module "ci_deployer" {
   source = "../../iam/role"
 
-  name               = "deployer"
+  name               = "ci-deployer"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
