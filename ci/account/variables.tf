@@ -1,11 +1,15 @@
 variable "master_aws_account_id" {}
-variable "additional_principals" {
+variable "deployer_additional_principals" {
+  type = list
+  default = []
+}
+variable "provisioner_additional_principals" {
   type = list
   default = [
     "arn:aws:iam::492614697882:root",
   ]
 }
-variable "policy" {
+variable "deployer_policy" {
   default = <<EOF
 {
   "Version": "2012-10-17",

@@ -1,7 +1,7 @@
 locals {
-  principals = concat(
+  deployer_principals = concat(
     list("arn:aws:iam::${var.master_aws_account_id}:user/ci-deployer"),
-    var.additional_principals,
+    var.deployer_additional_principals,
   )
 }
 
@@ -17,7 +17,7 @@ module "ci_deployer" {
       "Effect": "Allow",
       "Principal": {
         "AWS": [
-          ${join(",", formatlist("\"%s\"", local.principals))}
+          ${join(",", formatlist("\"%s\"", local.deployer_principals))}
         ]
       },
       "Action": "sts:AssumeRole"
@@ -25,6 +25,6 @@ module "ci_deployer" {
   ]
 }
 EOF
-  policy = var.policy
+  policy = var.deployer_policy
 }
 
