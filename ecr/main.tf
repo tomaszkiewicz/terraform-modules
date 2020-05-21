@@ -14,9 +14,9 @@ resource "aws_ecr_repository" "repo" {
     scan_on_push = var.scan_images
   }
 
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "repo" {
