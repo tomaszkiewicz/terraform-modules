@@ -1,25 +1,34 @@
+locals {
+  repos = compact(concat(
+    list(var.name),
+    var.names,
+  ))
+}
+
 resource "aws_ecr_repository" "repo" {
-  name = var.name
+  for_each = toset(local.repos)
+
+  name = each.value
 
   image_scanning_configuration {
     scan_on_push = var.scan_images
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 resource "aws_ecr_lifecycle_policy" "repo" {
-  count = var.aws_ecr_lifecycle_policy == "" ? 0 : 1
+  for_each = var.lifecycle_policy == "" ? [] : toset(local.repos)
 
-  repository = aws_ecr_repository.repo.name
-  policy     = var.aws_ecr_lifecycle_policy
+  repository = aws_ecr_repository.repo[each.value].name
+  policy     = var.lifecycle_policy
 }
 
 resource "aws_ecr_repository_policy" "repo" {
-  count = var.aws_ecr_repository_policy == "" ? 0 : 1
+  for_each = var.repository_policy == "" ? [] : toset(local.repos)
 
-  repository = aws_ecr_repository.repo.name
-  policy     = var.aws_ecr_repository_policy
+  repository = aws_ecr_repository.repo[each.value].name
+  policy     = var.repository_policy
 }
