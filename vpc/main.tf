@@ -1,7 +1,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "main"
+  name = var.name
   cidr = var.cidr_block
 
   azs = data.aws_availability_zones.available.names
@@ -16,12 +16,12 @@ module "vpc" {
     cidrsubnet(var.cidr_block, 8, 131),
   ]
 
-  public_subnet_tags = {
+  public_subnet_tags = var.eks_cluster_name == "" ? {} : {
     "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
     "kubernetes.io/role/elb"                        = "1"
   }
 
-  private_subnet_tags = {
+  private_subnet_tags = var.eks_cluster_name == "" ? {} : {
     "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 
