@@ -2,7 +2,7 @@ variable "name" { default = "db" }
 variable "apply_immediately" { default = false }
 variable "instance_class" { default = "db.t2.small " }
 variable "allocated_storage" { default = 20 }
-variable "username" { deafult = "admin" }
+variable "username" { default = "admin" }
 variable "password" { default = "" }
 variable "iam_auth_enabled" { default = true }
 variable "security_group_ids" {
@@ -12,7 +12,7 @@ variable "subnet_ids" {
   type = list
 }
 variable "backup_retention_period" { default = 7 }
-variable "deletion_protection" { deafult = true }
+variable "deletion_protection" { default = true }
 variable "cloudwatch_logs_exports" {
   type    = list
   default = []

@@ -6,6 +6,10 @@ output "vpc_id" {
   value = module.vpc.vpc_id
 }
 
+output "cidr_block" {
+  value = var.cidr_block
+}
+
 output "private_subnets" {
   value = module.vpc.private_subnets
 }
