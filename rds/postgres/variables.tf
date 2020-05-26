@@ -1,6 +1,6 @@
 variable "name" { default = "db" }
 variable "apply_immediately" { default = false }
-variable "instance_class" { default = "db.t3.small " }
+variable "instance_class" { default = "db.t3.small" }
 variable "allocated_storage" { default = 20 }
 variable "username" { default = "admin" }
 variable "password" { default = "" }
