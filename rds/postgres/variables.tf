@@ -1,4 +1,4 @@
-variable "name" { default = "database" }
+variable "name" { default = "default" }
 variable "apply_immediately" { default = false }
 variable "instance_class" { default = "db.t3.small" }
 variable "allocated_storage" { default = 20 }
