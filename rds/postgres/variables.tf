@@ -2,7 +2,7 @@ variable "name" { default = "apps" }
 variable "apply_immediately" { default = false }
 variable "instance_class" { default = "db.t3.small" }
 variable "allocated_storage" { default = 20 }
-variable "username" { default = "admin" }
+variable "username" { default = "sa" }
 variable "password" { default = "" }
 variable "iam_auth_enabled" { default = true }
 variable "security_group_ids" {
