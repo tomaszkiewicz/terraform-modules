@@ -15,10 +15,10 @@ module "database" {
   allocated_storage = var.allocated_storage
 
   storage_encrypted = false
-  port              = 5432
+  port              = var.port
 
   username = var.username
-  password = var.password
+  password = local.password
 
   iam_database_authentication_enabled = var.iam_auth_enabled
   vpc_security_group_ids              = var.security_group_ids
@@ -30,4 +30,17 @@ module "database" {
   subnet_ids                      = var.subnet_ids
   final_snapshot_identifier       = var.name
   deletion_protection             = var.deletion_protection
+  publicly_accessible             = var.publicly_accessible
+}
+
+locals {
+  password = var.password == "" ? join("", random_password.password.*.result) : var.password
+}
+
+resource "random_password" "password" {
+  count = var.password == "" ? 1 : 0
+
+  length           = 16
+  special          = true
+  override_special = "_%@"
 }

@@ -17,3 +17,5 @@ variable "cloudwatch_logs_exports" {
   type    = list
   default = []
 }
+variable "port" { default = 5432 }
+variable "publicly_accessible" { default = false }
