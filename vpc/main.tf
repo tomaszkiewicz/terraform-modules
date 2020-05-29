@@ -5,15 +5,14 @@ module "vpc" {
   cidr = var.cidr_block
 
   azs = data.aws_availability_zones.available.names
-  private_subnets = [
-    cidrsubnet(var.cidr_block, 8, 1),
-    cidrsubnet(var.cidr_block, 8, 2),
-    cidrsubnet(var.cidr_block, 8, 3),
-  ]
+
   public_subnets = [
-    cidrsubnet(var.cidr_block, 8, 129),
-    cidrsubnet(var.cidr_block, 8, 130),
-    cidrsubnet(var.cidr_block, 8, 131),
+    for az in data.aws_availability_zones.available.names :
+    cidrsubnet(var.cidr_block, 8, index(data.aws_availability_zones.available.names, az) + 129)
+  ]
+  private_subnets = [
+    for az in data.aws_availability_zones.available.names :
+    cidrsubnet(var.cidr_block, 8, index(data.aws_availability_zones.available.names, az) + 1)
   ]
 
   public_subnet_tags = var.eks_cluster_name == "" ? {} : {
