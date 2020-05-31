@@ -39,6 +39,4 @@ module "vpc" {
   single_nat_gateway     = var.production_mode == false
   one_nat_gateway_per_az = true
   enable_dns_hostnames   = true
-
-  publicly_accessible = var.publicly_accessible
 }

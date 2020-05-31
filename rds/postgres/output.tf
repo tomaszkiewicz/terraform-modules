@@ -22,6 +22,10 @@ output "id" {
   value = module.database.this_db_instance_id
 }
 
+output "resource_id" {
+  value = module.database.this_db_instance_resource_id
+}
+
 output "port" {
   value = var.port
 }
