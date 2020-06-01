@@ -8,6 +8,9 @@ locals {
       "Principal": {
         "AWS": [
           ${join(",", formatlist("\"%s\"", var.trusted_aws_principals))}
+        ],
+        "Service": [
+          ${join(",", formatlist("\"%s\"", var.trusted_aws_services))}
         ]
       },
       "Effect": "Allow"
