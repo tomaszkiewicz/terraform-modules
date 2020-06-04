@@ -47,3 +47,5 @@ variable "deployer_policy" {
 }
 EOF
 }
+
+variable "deployer_additional_policy" { default = "" }

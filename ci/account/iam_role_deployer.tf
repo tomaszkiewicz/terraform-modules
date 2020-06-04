@@ -28,3 +28,9 @@ EOF
   policy = var.deployer_policy
 }
 
+resource "aws_iam_role_policy" "additional" {
+  count = var.deployer_additional_policy == "" ? 0 : 1
+
+  role = module.ci_deployer.name
+  policy = var.deployer_additional_policy
+}
