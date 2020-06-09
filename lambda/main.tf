@@ -25,6 +25,10 @@ resource "aws_lambda_function" "lambda_source_dir" {
       last_modified,
     ]
   }
+
+  depends_on = [
+    data.archive_file.lambda_source,
+  ]
 }
 
 resource "aws_lambda_function" "lambda_external" {
