@@ -6,4 +6,9 @@ variable "domains" {
   default = []
 }
 
+variable "mails" {
+  type    = list
+  default = []
+}
+
 variable "create_user" { default = false }
