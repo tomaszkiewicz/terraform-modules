@@ -13,7 +13,7 @@ resource "aws_ses_domain_identity" "domain" {
 resource "aws_ses_identity_notification_topic" "bounce" {
   for_each = toset(var.domains)
 
-  topic_arn                = aws_sns_topic.bounce_notifications.arn
+  topic_arn                = aws_sns_topic.bounce_notification.arn
   notification_type        = "Bounce"
   identity                 = aws_ses_domain_identity.domain[each.value].domain
   include_original_headers = true
@@ -22,7 +22,7 @@ resource "aws_ses_identity_notification_topic" "bounce" {
 resource "aws_ses_identity_notification_topic" "complaint" {
   for_each = toset(var.domains)
 
-  topic_arn                = aws_sns_topic.bounce_notifications.arn
+  topic_arn                = aws_sns_topic.bounce_notification.arn
   notification_type        = "Complaint"
   identity                 = aws_ses_domain_identity.domain[each.value].domain
   include_original_headers = true
