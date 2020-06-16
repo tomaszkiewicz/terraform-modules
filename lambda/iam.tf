@@ -1,7 +1,7 @@
 resource "aws_lambda_permission" "principal" {
   for_each = toset(var.invoke_allow_principals)
 
-  statement_id  = replace(replace(replace(each.value, ".", "_"), ":", "_"), "/", "_")
+  statement_id  = replace(each.value, "/(?![a-zA-Z0-9-_])/", "_")
   action        = "lambda:InvokeFunction"
   function_name = join("", aws_lambda_function.lambda_source_dir.*.function_name, aws_lambda_function.lambda_external.*.function_name)
   principal     = each.value
