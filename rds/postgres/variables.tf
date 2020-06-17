@@ -19,3 +19,5 @@ variable "cloudwatch_logs_exports" {
 }
 variable "port" { default = 5432 }
 variable "publicly_accessible" { default = false }
+
+variable "kms_key_id" { default = "" }

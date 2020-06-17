@@ -14,14 +14,15 @@ module "database" {
   instance_class    = var.instance_class
   allocated_storage = var.allocated_storage
 
-  storage_encrypted = false
-  port              = var.port
+  storage_encrypted = var.kms_key_id != ""
+  kms_key_id        = var.kms_key_id
 
   username = var.username
   password = local.password
 
   iam_database_authentication_enabled = var.iam_auth_enabled
   vpc_security_group_ids              = var.security_group_ids
+  port                                = var.port
 
   maintenance_window              = "Sat:00:00-Sat:03:00"
   backup_window                   = "03:00-06:00"
