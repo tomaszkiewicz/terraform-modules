@@ -13,6 +13,7 @@ module "database" {
 
   instance_class    = var.instance_class
   allocated_storage = var.allocated_storage
+  parameters        = var.parameters
 
   storage_encrypted = var.kms_key_id != ""
   kms_key_id        = var.kms_key_id
