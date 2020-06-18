@@ -35,6 +35,12 @@ resource "aws_msk_cluster" "kafka" {
     }
   }
 
+  encryption_info {
+    encryption_in_transit {
+      client_broker = "TLS_PLAINTEXT"
+    }
+  }
+
   tags = {
     Name = var.name
   }
@@ -42,7 +48,6 @@ resource "aws_msk_cluster" "kafka" {
   lifecycle {
     ignore_changes = [
       configuration_info,
-      encryption_info,
     ]
   }
 }
