@@ -1,0 +1,1 @@
+variable "dns_zone" {}
