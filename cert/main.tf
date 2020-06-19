@@ -4,9 +4,6 @@
 module "cert" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> v2.0"
-  providers = {
-    aws = aws.us-east-1
-  }
 
   create_certificate                 = var.create_certificate
   validate_certificate               = var.validate_certificate
