@@ -23,7 +23,7 @@ resource "aws_iam_policy" "policy" {
                 "iam:ChangePassword",
                 "iam:GetUser"
             ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
+            "Resource": "arn:aws:iam::*:user/$${aws:username}"
         },
         {
             "Sid": "AllowManageOwnAccessKeys",
@@ -34,7 +34,7 @@ resource "aws_iam_policy" "policy" {
                 "iam:ListAccessKeys",
                 "iam:UpdateAccessKey"
             ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
+            "Resource": "arn:aws:iam::*:user/$${aws:username}"
         },
         {
             "Sid": "AllowManageOwnSigningCertificates",
@@ -45,7 +45,7 @@ resource "aws_iam_policy" "policy" {
                 "iam:UpdateSigningCertificate",
                 "iam:UploadSigningCertificate"
             ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
+            "Resource": "arn:aws:iam::*:user/$${aws:username}"
         },
         {
             "Sid": "AllowManageOwnSSHPublicKeys",
@@ -57,7 +57,7 @@ resource "aws_iam_policy" "policy" {
                 "iam:UpdateSSHPublicKey",
                 "iam:UploadSSHPublicKey"
             ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
+            "Resource": "arn:aws:iam::*:user/$${aws:username}"
         },
         {
             "Sid": "AllowManageOwnGitCredentials",
@@ -69,7 +69,7 @@ resource "aws_iam_policy" "policy" {
                 "iam:ResetServiceSpecificCredential",
                 "iam:UpdateServiceSpecificCredential"
             ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
+            "Resource": "arn:aws:iam::*:user/$${aws:username}"
         },
         {
             "Sid": "AllowManageOwnVirtualMFADevice",
@@ -78,7 +78,7 @@ resource "aws_iam_policy" "policy" {
                 "iam:CreateVirtualMFADevice",
                 "iam:DeleteVirtualMFADevice"
             ],
-            "Resource": "arn:aws:iam::*:mfa/${aws:username}"
+            "Resource": "arn:aws:iam::*:mfa/$${aws:username}"
         },
         {
             "Sid": "AllowManageOwnUserMFA",
@@ -89,7 +89,7 @@ resource "aws_iam_policy" "policy" {
                 "iam:ListMFADevices",
                 "iam:ResyncMFADevice"
             ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
+            "Resource": "arn:aws:iam::*:user/$${aws:username}"
         },
         {
             "Sid": "DenyAllExceptListedIfNoMFA",
