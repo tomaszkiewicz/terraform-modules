@@ -15,8 +15,8 @@ resource "aws_s3_bucket" "bucket" {
   }
 
   server_side_encryption_configuration {
-    "rule" {
-      "apply_server_side_encryption_by_default" {
+    rule {
+      apply_server_side_encryption_by_default {
         kms_master_key_id = var.kms_key_id
         sse_algorithm = "aws:kms"
       }
@@ -61,7 +61,7 @@ resource "aws_s3_bucket" "bucket" {
       "Action": [
         "s3:*"
       ],
-      "Resource": "arn:aws:s3:::ifds-${lower(var.account_name)}-backup/*"
+      "Resource": "arn:aws:s3:::${var.bucket}/*"
     }
   ]
 }
