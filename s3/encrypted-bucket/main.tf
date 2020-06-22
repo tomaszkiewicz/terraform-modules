@@ -50,18 +50,6 @@ resource "aws_s3_bucket" "bucket" {
           "s3:x-amz-server-side-encryption": true
         }
       }
-    },
-    {
-      "Effect":"Allow",
-      "Principal": {
-        "AWS": [
-          "${module.provisioner_role.arn}"
-        ]
-      },
-      "Action": [
-        "s3:*"
-      ],
-      "Resource": "arn:aws:s3:::${var.bucket}/*"
     }
   ]
 }
