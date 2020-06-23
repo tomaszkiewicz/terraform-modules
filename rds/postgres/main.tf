@@ -43,6 +43,6 @@ resource "random_password" "password" {
   count = var.password == "" ? 1 : 0
 
   length           = 16
-  special          = true
+  special          = false
   override_special = "_%@"
 }
