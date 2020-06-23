@@ -47,7 +47,7 @@ resource "aws_s3_bucket" "bucket" {
       "Resource": "arn:aws:s3:::${var.bucket}/*",
       "Condition": {
         "Null": {
-          "s3:x-amz-server-side-encryption": true
+          "s3:x-amz-server-side-encryption": "true"
         }
       }
     }
