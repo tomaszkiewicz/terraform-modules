@@ -3,7 +3,7 @@ locals {
     md5(file("${path.module}/main.tf")),
     md5(file("${path.module}/base.tf")),
   ]
-  combined_hash = join(",", local.file_hashes)
+  combined_hash = join(",", concat(local.file_hashes, var.external_recreate_hashes))
 }
 
 resource "aws_api_gateway_rest_api" "api" {
