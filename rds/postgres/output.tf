@@ -34,6 +34,10 @@ output "username" {
   value = var.username
 }
 
+output "user" {
+  value = var.username
+}
+
 output "password" {
   value = local.password
 }

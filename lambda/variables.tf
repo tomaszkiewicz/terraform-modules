@@ -1,29 +1,28 @@
 variable "name" {}
-variable "runtime" {}
-variable "handler" {}
-
+variable "runtime" { default = "nodejs12.x" }
+variable "handler" { default = "index.handler" }
 variable "source_dir" { default = "" }
 
 variable "timeout" { default = 10 }
 variable "publish" { default = false }
 variable "memory_size" { default = 128 }
 variable "layers" {
-  type = list
+  type    = list
   default = []
 }
 variable "logs_retention_days" { default = 7 }
 
 variable "vpc_subnet_ids" {
   default = []
-  type = list
+  type    = list
 }
 variable "vpc_security_group_ids" {
   default = []
-  type = list
+  type    = list
 }
 
 variable "invoke_allow_principals" {
-  type = list
+  type    = list
   default = []
 }
 
@@ -36,7 +35,7 @@ variable "environment" {
 
 variable "additional_policy" { default = "" }
 variable "attach_policies" {
-  type = list
+  type    = list
   default = []
 }
 
