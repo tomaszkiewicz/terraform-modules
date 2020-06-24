@@ -16,7 +16,13 @@ resource "aws_api_gateway_deployment" "deployment" {
 
   variables = {
     #deployed_at = timestamp()
-    tf_recreate_hash = local.combined_hash
+    tf_recreate_hash     = local.combined_hash
+    name                 = var.name
+    stage_name           = var.stage_name
+    lambda_function_name = var.lambda_function_name
+    lambda_invoke_arn    = var.lambda_invoke_arn
+    authorization        = var.authorization
+    authorizer_id        = var.authorizer_id
   }
 
   depends_on = [
