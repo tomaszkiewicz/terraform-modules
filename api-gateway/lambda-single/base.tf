@@ -28,4 +28,8 @@ resource "aws_api_gateway_deployment" "deployment" {
   depends_on = [
     aws_api_gateway_method.lambda,
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
