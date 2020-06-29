@@ -62,7 +62,7 @@ resource "aws_lambda_function" "lambda_external" {
 data "archive_file" "lambda_source" {
   type        = "zip"
   source_dir  = var.source_dir != "" ? var.source_dir : "${path.module}/default"
-  output_path = "/tmp/lambda-${var.name}.zip"
+  output_path = "/tmp/terraform-artifacts/lambda-${var.name}.zip"
 }
 
 resource "aws_cloudwatch_log_group" "lambda" {
