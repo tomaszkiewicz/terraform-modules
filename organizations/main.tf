@@ -4,6 +4,10 @@ resource "aws_organizations_account" "account" {
   name  = each.value.name
   email = each.value.mail
 
+  tags = {
+    Name = each.value.name
+  }
+
   lifecycle {
     ignore_changes = [
       name,
