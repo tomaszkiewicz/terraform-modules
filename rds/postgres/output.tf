@@ -41,3 +41,7 @@ output "user" {
 output "password" {
   value = local.password
 }
+
+output "engine" {
+  value = "postgres"
+}
