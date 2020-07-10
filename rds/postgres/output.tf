@@ -45,3 +45,7 @@ output "password" {
 output "engine" {
   value = "postgres"
 }
+
+output "name" {
+  value = var.name
+}

@@ -3,6 +3,21 @@ locals {
     list("arn:aws:iam::${var.master_aws_account_id}:user/ci-provisioner"),
     var.provisioner_additional_principals,
   )
+  sso_trust_policy = <<EOF
+  ,
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::${var.sso_account_id}:root"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringLike": {
+          "aws:PrincipalArn": "arn:aws:iam::${var.sso_account_id}:role/aws-reserved/sso.amazonaws.com/${var.sso_region}/AWSReservedSSO_${var.sso_role_name}_*"
+        }
+      }
+    }
+EOF
 }
 
 module "ci_provisioner" {
@@ -22,6 +37,7 @@ module "ci_provisioner" {
       },
       "Action": "sts:AssumeRole"
     }
+    ${var.sso_trust_enabled ? local.sso_trust_policy : ""}
   ]
 }
 EOF

@@ -1,6 +1,6 @@
 variable "master_aws_account_id" {}
 variable "deployer_additional_principals" {
-  type = list
+  type    = list
   default = []
 }
 variable "provisioner_additional_principals" {
@@ -49,3 +49,9 @@ EOF
 }
 
 variable "deployer_additional_policy" { default = "" }
+
+# all variables have to be set when sso_trust_enabled = true
+variable "sso_trust_enabled" { default = false }
+variable "sso_account_id" { default = "" }
+variable "sso_region" { default = "" }
+variable "sso_role_name" { default = "AdministratorAccess" }
