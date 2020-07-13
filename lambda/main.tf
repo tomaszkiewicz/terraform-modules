@@ -57,7 +57,7 @@ resource "aws_lambda_function" "lambda_source_file" {
 }
 
 resource "aws_lambda_function" "lambda_external" {
-  count = var.source_dir == "" ? 1 : 0
+  count = var.source_dir == "" && var.source_file == "" ? 1 : 0
 
   function_name    = var.name
   filename         = data.archive_file.lambda_source.output_path
