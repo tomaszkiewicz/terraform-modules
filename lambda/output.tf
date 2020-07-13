@@ -37,11 +37,3 @@ output "invoke_arn" {
     aws_lambda_function.lambda_source_file.*.invoke_arn,
   )
 }
-
-output "arn" {
-  value = join("",
-    aws_lambda_function.lambda_external.*.arn,
-    aws_lambda_function.lambda_source_dir.*.arn,
-    aws_lambda_function.lambda_source_file.*.arn,
-  )
-}
