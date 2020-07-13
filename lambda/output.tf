@@ -1,9 +1,17 @@
 output "arn" {
-  value = join("", aws_lambda_function.lambda_external.*.arn, aws_lambda_function.lambda_source_dir.*.arn)
+  value = join("",
+    aws_lambda_function.lambda_external.*.arn,
+    aws_lambda_function.lambda_source_dir.*.arn,
+    aws_lambda_function.lambda_source_file.*.arn,
+  )
 }
 
 output "version" {
-  value = join("", aws_lambda_function.lambda_external.*.version, aws_lambda_function.lambda_source_dir.*.version)
+  value = join("",
+    aws_lambda_function.lambda_external.*.version,
+    aws_lambda_function.lambda_source_dir.*.version,
+    aws_lambda_function.lambda_source_file.*.version,
+  )
 }
 
 output "function_name" {
@@ -23,5 +31,17 @@ output "iam_role_name" {
 }
 
 output "invoke_arn" {
-  value = join("", aws_lambda_function.lambda_external.*.invoke_arn, aws_lambda_function.lambda_source_dir.*.invoke_arn)
+  value = join("",
+    aws_lambda_function.lambda_external.*.invoke_arn,
+    aws_lambda_function.lambda_source_dir.*.invoke_arn,
+    aws_lambda_function.lambda_source_file.*.invoke_arn,
+  )
+}
+
+output "arn" {
+  value = join("",
+    aws_lambda_function.lambda_external.*.arn,
+    aws_lambda_function.lambda_source_dir.*.arn,
+    aws_lambda_function.lambda_source_file.*.arn,
+  )
 }
