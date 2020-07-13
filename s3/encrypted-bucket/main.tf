@@ -23,6 +23,11 @@ resource "aws_s3_bucket" "bucket" {
     }
   }
 
+  logging {
+    target_bucket = var.logging_target_bucket
+    target_prefix = var.logging_target_prefix
+  }
+
   policy = <<EOF
 {
   "Version":"2012-10-17",
