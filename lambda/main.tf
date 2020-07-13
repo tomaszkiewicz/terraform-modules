@@ -27,6 +27,35 @@ resource "aws_lambda_function" "lambda_source_dir" {
   }
 }
 
+resource "aws_lambda_function" "lambda_source_file" {
+  count = var.source_file != "" ? 1 : 0
+
+  function_name    = var.name
+  filename         = var.source_file
+  source_code_hash = filebase64sha256(var.source_file)
+  role             = module.lambda_role.arn
+  handler          = var.handler
+  timeout          = var.timeout
+  runtime          = var.runtime
+  publish          = var.publish
+  memory_size      = var.memory_size
+  layers           = var.layers
+  vpc_config {
+    subnet_ids         = var.vpc_subnet_ids
+    security_group_ids = var.vpc_security_group_ids
+  }
+
+  environment {
+    variables = var.environment
+  }
+
+  lifecycle {
+    ignore_changes = [
+      last_modified,
+    ]
+  }
+}
+
 resource "aws_lambda_function" "lambda_external" {
   count = var.source_dir == "" ? 1 : 0
 

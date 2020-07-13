@@ -3,7 +3,7 @@ resource "aws_lambda_permission" "principal" {
 
   statement_id  = replace(each.value, "/[\\.:\\/]/", "_")
   action        = "lambda:InvokeFunction"
-  function_name = join("", aws_lambda_function.lambda_source_dir.*.function_name, aws_lambda_function.lambda_external.*.function_name)
+  function_name = join("", aws_lambda_function.lambda_source_dir.*.function_name, aws_lambda_function.lambda_external.*.function_name, aws_lambda_function.lambda_source_file.*.function_name)
   principal     = each.value
 }
 

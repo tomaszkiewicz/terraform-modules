@@ -2,6 +2,7 @@ variable "name" {}
 variable "runtime" { default = "nodejs12.x" }
 variable "handler" { default = "index.handler" }
 variable "source_dir" { default = "" }
+variable "source_file" { default = "" }
 
 variable "timeout" { default = 10 }
 variable "publish" { default = false }
