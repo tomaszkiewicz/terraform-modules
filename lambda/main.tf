@@ -98,3 +98,12 @@ resource "aws_cloudwatch_log_group" "lambda" {
   name              = "/aws/lambda/${var.name}"
   retention_in_days = var.logs_retention_days
 }
+
+resource "aws_cloudwatch_log_subscription_filter" "subscription" {
+  count = var.logs_destination_lambda_arn != "" ? 1 : 0
+
+  name            = var.name
+  log_group_name  = aws_cloudwatch_log_group.lambda.name
+  filter_pattern  = var.logs_destination_filter_pattern
+  destination_arn = var.logs_destination_lambda_arn
+}
