@@ -1,34 +1,5 @@
-resource "aws_s3_bucket" "bucket" {
-  bucket = var.bucket
-  acl = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-
-  tags = {
-    Name = var.bucket
-  }
-
-  versioning {
-    enabled = var.versioning_enabled
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = var.kms_key_id
-        sse_algorithm = "aws:kms"
-      }
-    }
-  }
-
-  logging {
-    target_bucket = var.logging_target_bucket
-    target_prefix = var.logging_target_prefix
-  }
-
-  policy = <<EOF
+locals {
+  policy = var.policy != "" ? var.policy : <<EOF
 {
   "Version":"2012-10-17",
   "Statement": [
@@ -59,4 +30,37 @@ resource "aws_s3_bucket" "bucket" {
   ]
 }
 EOF
+}
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = var.bucket
+  acl = "private"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+
+  tags = {
+    Name = var.bucket
+  }
+
+  versioning {
+    enabled = var.versioning_enabled
+  }
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = var.kms_key_id
+        sse_algorithm = "aws:kms"
+      }
+    }
+  }
+
+  logging {
+    target_bucket = var.logging_target_bucket
+    target_prefix = var.logging_target_prefix
+  }
+
+  policy = local.policy
 }
