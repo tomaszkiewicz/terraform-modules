@@ -83,7 +83,6 @@ resource "aws_lambda_function" "lambda_external" {
       filename,
       source_code_hash,
       last_modified,
-      layers,
     ]
   }
 }
