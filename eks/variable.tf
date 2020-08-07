@@ -6,10 +6,22 @@ variable "vpc_id" {}
 variable "aws_account_id" {}
 variable "worker_public_ip" { default = true }
 
+variable "medium_asg_enabled" { default = true }
 variable "medium_asg_max_size" { default = 3 }
 variable "medium_asg_min_size" { default = 1 }
 variable "medium_asg_desired_capacity" { default = 1 }
 variable "medium_asg_on_demand_base_capacity" { default = 1 }
+
+variable "gitlab_ci_runner_medium_asg_enabled" { default = false }
+variable "gitlab_ci_runner_medium_asg_max_size" { default = 3 }
+variable "gitlab_ci_runner_medium_asg_min_size" { default = 0 }
+variable "gitlab_ci_runner_medium_asg_desired_capacity" { default = 0 }
+variable "gitlab_ci_runner_medium_asg_on_demand_base_capacity" { default = 0 }
+
+variable "additional_worker_groups_launch_templates" {
+  type    = list
+  default = []
+}
 
 variable "map_accounts" {
   description = "Additional AWS account numbers to add to the aws-auth configmap."

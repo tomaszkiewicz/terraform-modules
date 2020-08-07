@@ -15,8 +15,8 @@ provider "kubernetes" {
 }
 
 module "eks" {
-  source             = "terraform-aws-modules/eks/aws"
-  version            = "11.0.0"
+  source  = "terraform-aws-modules/eks/aws"
+  version = "11.0.0"
 
   cluster_name       = var.cluster_name
   subnets            = var.subnet_ids
@@ -57,41 +57,7 @@ sudo systemctl start amazon-ssm-agent
 EOF
   }
 
-  worker_groups_launch_template = [
-    {
-      name                    = "medium"
-      override_instance_types = ["t3.medium", "t2.medium", "t3a.medium"]
-      asg_max_size            = var.medium_asg_max_size
-      asg_min_size            = var.medium_asg_min_size
-      asg_desired_capacity    = var.medium_asg_desired_capacity
-      on_demand_base_capacity = var.medium_asg_on_demand_base_capacity
-      bootstrap_extra_args    = "--use-max-pods false"
-      #kubelet_extra_args      = "--node-labels=kubernetes.io/size=medium"
-
-      tags = [
-        {
-          "key"                 = "Name"
-          "propagate_at_launch" = "true"
-          "value"               = "${var.cluster_name}-medium"
-        },
-        {
-          "key"                 = "k8s.io/cluster-autoscaler/enabled"
-          "propagate_at_launch" = "false"
-          "value"               = "true"
-        },
-        {
-          "key"                 = "k8s.io/cluster-autoscaler/${var.tenant_name}-${var.cluster_name}"
-          "propagate_at_launch" = "false"
-          "value"               = "true"
-        },
-        {
-          "key"                 = "k8s.io/cluster-autoscaler/node-template/label/type"
-          "propagate_at_launch" = "false"
-          "value"               = "medium"
-        },
-      ]
-    },
-  ]
+  worker_groups_launch_template = local.worker_groups_launch_template
 
   map_roles    = var.map_roles
   map_users    = var.map_users
