@@ -6,6 +6,8 @@ variable "vpc_id" {}
 variable "aws_account_id" {}
 variable "worker_public_ip" { default = true }
 
+variable "override_ami_id" { default = null }
+
 variable "medium_asg_enabled" { default = true }
 variable "medium_asg_max_size" { default = 3 }
 variable "medium_asg_min_size" { default = 1 }
