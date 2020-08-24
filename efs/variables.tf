@@ -7,3 +7,5 @@ variable "subnet_ids" {
 variable "security_group_ids" {
   type = list
 }
+variable "cloudwatch_credit_balance_threshold" { default = 500 * 1000000000 }
+variable "notifications_sns_topic_arn" { default = "" }
