@@ -71,7 +71,7 @@ variable "policy" {
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:${data.aws_partition.current.partition}:logs:*:*:*"
+      "Resource": "arn:*:logs:*:*:*"
     },
     {
       "Effect": "Allow",
