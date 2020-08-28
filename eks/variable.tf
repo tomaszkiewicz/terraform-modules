@@ -1,4 +1,5 @@
 variable "cluster_name" {}
+variable "cluster_version" { default = "1.15" }
 variable "tenant_name" {}
 variable "subnet_ids" {}
 variable "key_name" {}
@@ -6,7 +7,7 @@ variable "vpc_id" {}
 variable "aws_account_id" {}
 variable "worker_public_ip" { default = true }
 
-variable "override_ami_id" { default = null }
+variable "override_ami_id" { default = "" }
 
 variable "medium_asg_enabled" { default = true }
 variable "medium_asg_max_size" { default = 3 }
