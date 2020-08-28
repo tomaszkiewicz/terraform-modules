@@ -1,6 +1,6 @@
 locals {
   provisioner_principals = concat(
-    list("arn:aws:iam::${var.master_aws_account_id}:user/ci-provisioner"),
+    list("arn:${data.aws_partition.current.partition}:iam::${var.master_aws_account_id}:user/ci-provisioner"),
     var.provisioner_additional_principals,
   )
   sso_trust_policy = <<EOF
@@ -8,12 +8,12 @@ locals {
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::${var.sso_account_id}:root"
+        "AWS": "arn:${data.aws_partition.current.partition}:iam::${var.sso_account_id}:root"
       },
       "Action": "sts:AssumeRole",
       "Condition": {
         "StringLike": {
-          "aws:PrincipalArn": "arn:aws:iam::${var.sso_account_id}:role/aws-reserved/sso.amazonaws.com/${var.sso_region}/AWSReservedSSO_${var.sso_role_name}_*"
+          "aws:PrincipalArn": "arn:${data.aws_partition.current.partition}:iam::${var.sso_account_id}:role/aws-reserved/sso.amazonaws.com/${var.sso_region}/AWSReservedSSO_${var.sso_role_name}_*"
         }
       }
     }
@@ -42,8 +42,8 @@ module "ci_provisioner" {
 }
 EOF
   attach_policies = [
-    "arn:aws:iam::aws:policy/AdministratorAccess",
-    "arn:aws:iam::aws:policy/job-function/Billing",
+    "arn:${data.aws_partition.current.partition}:iam::aws:policy/AdministratorAccess",
+    "arn:${data.aws_partition.current.partition}:iam::aws:policy/job-function/Billing",
   ]
 }
 

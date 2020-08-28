@@ -11,7 +11,7 @@ module "deployer" {
       "Action": [
         "sts:AssumeRole"
       ],
-      "Resource": "arn:aws:iam::*:role/ci-deployer"
+      "Resource": "arn:${data.aws_partition.current.partition}:iam::*:role/ci-deployer"
     },
     {
       "Effect": "Allow",

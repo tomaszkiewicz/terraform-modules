@@ -25,7 +25,7 @@ module "s3_bucket" {
         "Service": "cloudtrail.amazonaws.com"
       },
       "Action": "s3:GetBucketAcl",
-      "Resource": "arn:aws:s3:::${local.bucket}"
+      "Resource": "arn:${data.aws_partition.current.partition}:s3:::${local.bucket}"
     },
     {
       "Effect": "Allow",
@@ -33,7 +33,7 @@ module "s3_bucket" {
         "Service": "cloudtrail.amazonaws.com"
       },
       "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::${local.bucket}/*",
+      "Resource": "arn:${data.aws_partition.current.partition}:s3:::${local.bucket}/*",
       "Condition": {
         "StringEquals": {
           "s3:x-amz-acl": "bucket-owner-full-control"

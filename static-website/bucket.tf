@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "website" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${local.bucket_name}/*"
+      "Resource": "arn:${data.aws_partition.current.partition}:s3:::${local.bucket_name}/*"
     }
   ]
 }

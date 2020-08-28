@@ -8,7 +8,7 @@ locals {
       "Effect": "Deny",
       "Principal": "*",
       "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::${var.bucket}/*",
+      "Resource": "arn:${data.aws_partition.current.partition}:s3:::${var.bucket}/*",
       "Condition": {
         "StringNotEquals": {
           "s3:x-amz-server-side-encryption": "aws:kms"
@@ -20,7 +20,7 @@ locals {
       "Effect": "Deny",
       "Principal": "*",
       "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::${var.bucket}/*",
+      "Resource": "arn:${data.aws_partition.current.partition}:s3:::${var.bucket}/*",
       "Condition": {
         "Null": {
           "s3:x-amz-server-side-encryption": "true"

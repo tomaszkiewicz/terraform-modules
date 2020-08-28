@@ -39,7 +39,7 @@ module "eks" {
 
   workers_additional_policies = [
     "${aws_iam_policy.eks_assume_role.arn}",
-    "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+    "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore",
   ]
 
   workers_group_defaults = {
@@ -75,7 +75,7 @@ resource "aws_iam_policy" "eks_assume_role" {
         "sts:AssumeRole"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:iam::${var.aws_account_id}:role/k8s-*"
+      "Resource": "arn:${data.aws_partition.current.partition}:iam::${var.aws_account_id}:role/k8s-*"
     }
   ]
 }

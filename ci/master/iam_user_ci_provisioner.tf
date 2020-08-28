@@ -11,7 +11,7 @@ module "provisioner" {
       "Action": [
         "sts:AssumeRole"
       ],
-      "Resource": "arn:aws:iam::*:role/ci-provisioner"
+      "Resource": "arn:${data.aws_partition.current.partition}:iam::*:role/ci-provisioner"
     },
     {
       "Effect": "Allow",

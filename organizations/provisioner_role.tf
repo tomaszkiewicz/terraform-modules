@@ -2,16 +2,16 @@ locals {
   provisioner_role_command = <<EOF
 ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
 
-echo "Creating provisioner role for arn:aws:iam::$ACCOUNT_ID:root"
+echo "Creating provisioner role for arn:${data.aws_partition.current.partition}:iam::$ACCOUNT_ID:root"
 
 echo "==> Assuming role on master"
 
-ROLE_ARN="arn:aws:iam::$MASTER_ACCOUNT_ID:role/ci-provisioner"
+ROLE_ARN="arn:${data.aws_partition.current.partition}:iam::$MASTER_ACCOUNT_ID:role/ci-provisioner"
 curl -s -o assume-role.sh https://gitlab.com/luktom/ci/-/raw/master/scripts/assume-role.sh && . assume-role.sh
 
 echo "==> Assuming role on $SLAVE_ACCOUNT_NAME"
 
-ROLE_ARN="arn:aws:iam::$SLAVE_ACCOUNT_ID:role/OrganizationAccountAccessRole"
+ROLE_ARN="arn:${data.aws_partition.current.partition}:iam::$SLAVE_ACCOUNT_ID:role/OrganizationAccountAccessRole"
 curl -s -o assume-role.sh https://gitlab.com/luktom/ci/-/raw/master/scripts/assume-role.sh && . assume-role.sh
 
 echo "==> Checking if provisioner role exists"
@@ -25,7 +25,7 @@ if ! aws iam get-role --role-name provisioner 2> /dev/null; then
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::$ACCOUNT_ID:root"
+        "AWS": "arn:${data.aws_partition.current.partition}:iam::$ACCOUNT_ID:root"
       },
       "Action": "sts:AssumeRole"
     }
@@ -38,7 +38,7 @@ POLICY
 
   sleep 5
 
-  aws iam attach-role-policy --role-name provisioner --policy-arn "arn:aws:iam::aws:policy/AdministratorAccess"
+  aws iam attach-role-policy --role-name provisioner --policy-arn "arn:${data.aws_partition.current.partition}:iam::aws:policy/AdministratorAccess"
 else
   echo "Role already exists"
 fi

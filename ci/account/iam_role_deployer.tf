@@ -1,6 +1,6 @@
 locals {
   deployer_principals = concat(
-    list("arn:aws:iam::${var.master_aws_account_id}:user/ci-deployer"),
+    list("arn:${data.aws_partition.current.partition}:iam::${var.master_aws_account_id}:user/ci-deployer"),
     var.deployer_additional_principals,
   )
 }

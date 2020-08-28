@@ -162,7 +162,7 @@ module "external_dns_role" {
         "route53:ChangeResourceRecordSets"
       ],
       "Resource": [
-        "arn:aws:route53:::hostedzone/*"
+        "arn:${data.aws_partition.current.partition}:route53:::hostedzone/*"
       ]
     },
     {
