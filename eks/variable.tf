@@ -15,6 +15,12 @@ variable "medium_asg_min_size" { default = 1 }
 variable "medium_asg_desired_capacity" { default = 1 }
 variable "medium_asg_on_demand_base_capacity" { default = 1 }
 
+variable "large_asg_enabled" { default = false }
+variable "large_asg_max_size" { default = 3 }
+variable "large_asg_min_size" { default = 1 }
+variable "large_asg_desired_capacity" { default = 1 }
+variable "large_asg_on_demand_base_capacity" { default = 1 }
+
 variable "gitlab_ci_runner_medium_asg_enabled" { default = false }
 variable "gitlab_ci_runner_medium_asg_max_size" { default = 3 }
 variable "gitlab_ci_runner_medium_asg_min_size" { default = 0 }
