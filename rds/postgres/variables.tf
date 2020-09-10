@@ -21,6 +21,7 @@ variable "port" { default = 5432 }
 variable "publicly_accessible" { default = false }
 variable "kms_key_id" { default = "" }
 variable "parameters" {
-  type = list
+  type    = list
   default = []
 }
+variable "performance_insights_enabled" { default = true }

@@ -15,6 +15,8 @@ module "database" {
   allocated_storage = var.allocated_storage
   parameters        = var.parameters
 
+  performance_insights_enabled = var.performance_insights_enabled
+
   storage_encrypted = var.kms_key_id != ""
   kms_key_id        = var.kms_key_id
 
