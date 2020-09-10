@@ -25,3 +25,4 @@ variable "parameters" {
   default = []
 }
 variable "performance_insights_enabled" { default = true }
+variable "snapshot_identifier" { default = "" }

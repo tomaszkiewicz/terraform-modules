@@ -10,6 +10,7 @@ module "database" {
   family               = "postgres11"
   major_engine_version = "11"
   apply_immediately    = var.apply_immediately
+  snapshot_identifier  = var.snapshot_identifier
 
   instance_class    = var.instance_class
   allocated_storage = var.allocated_storage
