@@ -13,3 +13,4 @@ variable "ebs_volume_size" { default = 100 }
 variable "logs_retention_days" { default = 7 }
 variable "logs_enabled" { default = true }
 variable "monitoring_enabled" { default = true }
+variable "create" { default = true }

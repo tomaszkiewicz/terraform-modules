@@ -4,6 +4,8 @@ resource "aws_cloudwatch_log_group" "kafka" {
 }
 
 resource "aws_msk_cluster" "kafka" {
+  count = var.create ? 1 : 0
+
   cluster_name           = var.name
   kafka_version          = var.kafka_version
   number_of_broker_nodes = var.cluster_size
