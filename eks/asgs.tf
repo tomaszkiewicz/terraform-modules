@@ -8,7 +8,7 @@ locals {
     asg_min_size            = var.medium_asg_min_size
     asg_desired_capacity    = var.medium_asg_desired_capacity
     on_demand_base_capacity = var.medium_asg_on_demand_base_capacity
-    bootstrap_extra_args    = "--use-max-pods false"
+    bootstrap_extra_args    = var.bootstrap_use_max_pods ? "" : "--use-max-pods false"
     #kubelet_extra_args      = "--node-labels=kubernetes.io/size=medium"
 
     tags = [
@@ -39,7 +39,7 @@ locals {
     asg_min_size            = var.large_asg_min_size
     asg_desired_capacity    = var.large_asg_desired_capacity
     on_demand_base_capacity = var.large_asg_on_demand_base_capacity
-    bootstrap_extra_args    = "--use-max-pods false"
+    bootstrap_extra_args    = var.bootstrap_use_max_pods ? "" : "--use-max-pods false"
     #kubelet_extra_args      = "--node-labels=kubernetes.io/size=large"
 
     tags = [
@@ -70,7 +70,7 @@ locals {
     asg_min_size            = var.gitlab_ci_runner_medium_asg_min_size
     asg_desired_capacity    = var.gitlab_ci_runner_medium_asg_desired_capacity
     on_demand_base_capacity = var.gitlab_ci_runner_medium_asg_on_demand_base_capacity
-    bootstrap_extra_args    = "--use-max-pods false"
+    bootstrap_extra_args    = var.bootstrap_use_max_pods ? "" : "--use-max-pods false"
     kubelet_extra_args      = "--register-with-taints workload-type=gitlab-ci-runner:NoSchedule --node-labels=workload-type=gitlab-ci-runner"
 
     tags = [
