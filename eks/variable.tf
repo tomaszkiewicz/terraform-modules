@@ -27,7 +27,7 @@ variable "gitlab_ci_runner_medium_asg_min_size" { default = 0 }
 variable "gitlab_ci_runner_medium_asg_desired_capacity" { default = 0 }
 variable "gitlab_ci_runner_medium_asg_on_demand_base_capacity" { default = 0 }
 
-variable "boostrap_use_max_pods" { default = false }
+variable "bootstrap_use_max_pods" { default = false }
 
 variable "additional_worker_groups_launch_templates" {
   type    = list
