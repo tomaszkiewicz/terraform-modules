@@ -3,6 +3,12 @@ output "arn" {
   value       = module.cert.this_acm_certificate_arn
 }
 
+output "certificate_arn" {
+  description = "The ARN of the certificate"
+  value       = module.cert.this_acm_certificate_arn
+}
+
+
 output "this_acm_certificate_arn" {
   description = "The ARN of the certificate"
   value       = module.cert.this_acm_certificate_arn
