@@ -33,6 +33,15 @@ resource "aws_s3_bucket" "bucket" {
     }
   }
 
+  dynamic "cors_rule" {
+    for_each = var.enable_cors ? [""] : []
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "PUT", "POST", "DELETE", "HEAD"]
+    allowed_origins = ["https://s3-website-test.hashicorp.com"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3000
+  }
+
   lifecycle_rule {
     enabled = var.enable_expiration
 

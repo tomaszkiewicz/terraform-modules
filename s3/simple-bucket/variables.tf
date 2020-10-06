@@ -9,3 +9,4 @@ variable "transition_storage_class" { default = "GLACIER" }
 variable "enable_expiration" { default = false }
 variable "days_to_expiration" { default = 90 }
 variable "acl" { default = "private" }
+variable "enable_cors" { default = false }
