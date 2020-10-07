@@ -38,7 +38,7 @@ resource "aws_s3_bucket" "bucket" {
     content {
       allowed_headers = ["*"]
       allowed_methods = ["GET", "PUT", "POST", "DELETE", "HEAD"]
-      allowed_origins = ["https://s3-website-test.hashicorp.com"]
+      allowed_origins = ["*"]
       expose_headers  = ["ETag"]
       max_age_seconds = 3000
     }
