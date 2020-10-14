@@ -42,7 +42,7 @@ module "eks" {
   }
 
   workers_additional_policies = [
-    "${aws_iam_policy.eks_assume_role.arn}",
+    aws_iam_policy.eks_assume_role.arn,
     "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore",
   ]
 
