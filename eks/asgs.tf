@@ -75,11 +75,6 @@ locals {
 
     tags = [
       {
-        "key"                 = "Name"
-        "propagate_at_launch" = "true"
-        "value"               = "${var.cluster_name}-gitlab-ci-runner-medium"
-      },
-      {
         "key"                 = "k8s.io/cluster-autoscaler/enabled"
         "propagate_at_launch" = "false"
         "value"               = "true"
