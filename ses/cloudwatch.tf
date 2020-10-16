@@ -3,7 +3,7 @@ resource "aws_cloudwatch_metric_alarm" "daily_sent_limit" {
 
   alarm_name          = "ses-daily-sent-limit"
   alarm_description   = "This alert monitors the number of mails sent duiring last day"
-  comparison_operator = "GraterThanThreshold"
+  comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "Send"
   namespace           = "AWS/SES"
