@@ -14,6 +14,7 @@ variable "layers" {
 variable "logs_retention_days" { default = 7 }
 variable "logs_destination_lambda_arn" { default = "" }
 variable "logs_destination_filter_pattern" { default = "" }
+variable "schedule_expression" { default = "" }
 
 variable "vpc_subnet_ids" {
   default = []
