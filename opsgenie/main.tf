@@ -3,6 +3,8 @@ resource "aws_sns_topic" "opsgenie_alarm_notification" {
 }
 
 resource "aws_sns_topic_subscription" "opsgenie_alarm_notification_subscription" {
+  count = var.api_key != "" ? 1 : 0
+
   topic_arn              = aws_sns_topic.opsgenie_alarm_notification.arn
   protocol               = "https"
   endpoint_auto_confirms = true
