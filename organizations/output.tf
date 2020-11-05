@@ -5,3 +5,7 @@ output "aws_organization_arn" {
 output "accounts" {
   value = {for a in aws_organizations_account.account: length(a.tags) == 0 ? a.name : a.tags.Name => a.id}
 }
+
+output "accounts_mails" {
+  value = {for a in aws_organizations_account.account: length(a.tags) == 0 ? a.name : a.tags.Name => a.email}
+}
