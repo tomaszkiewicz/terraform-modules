@@ -1,4 +1,6 @@
-variable "monthly_budget" {}
+variable "monthly_budget" {
+  type = number
+}
 variable "alert_mails" {
   type = list
 }
@@ -8,7 +10,7 @@ variable "forecast_threshold_percent" { default = 110 }
 resource "aws_budgets_budget" "monthly" {
   name         = "monthly-budget"
   budget_type  = "COST"
-  limit_amount = var.monthly_budget
+  limit_amount = var.monthly_budget + 0.01 // required as tf detects change when integer number used
   limit_unit   = "USD"
 
   time_period_end   = "2087-06-15_00:00"
