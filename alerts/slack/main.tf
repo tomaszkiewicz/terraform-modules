@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "../lambda"
+  source = "../../lambda"
 
   name        = "slack-alarm-notification"
   source_file = "/tmp/terraform-artifacts/lambda-slack-alarm-notification.zip"
