@@ -19,5 +19,5 @@ variable "max_ttl" { default = 3600 }
 variable "retain_on_delete" { default = false }
 
 locals {
-  bucket_name = "${var.external_bucket_name != "" ? var.external_bucket_name : (var.bucket_name == "" ? var.domain_name : var.bucket_name)}"
+  bucket_name = var.external_bucket_name != "" ? var.external_bucket_name : (var.bucket_name == "" ? var.domain_name : var.bucket_name)
 }
