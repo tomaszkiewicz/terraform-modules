@@ -18,7 +18,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "12.2.0"
 
-  worker_ami_owner_id         = data.aws_partition.current.partition == "aws-cn" ? "961992271922" : "602401143452"
+  worker_ami_owner_id         = var.override_ami_owner_id != "" ? var.override_ami_owner_id : data.aws_partition.current.partition == "aws-cn" ? "961992271922" : "602401143452"
   worker_ami_owner_id_windows = data.aws_partition.current.partition == "aws-cn" ? "016951021795" : "801119661308"
 
   cluster_name       = var.cluster_name
