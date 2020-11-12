@@ -85,6 +85,8 @@ resource "aws_cloudfront_distribution" "website" {
   custom_error_response {
     error_caching_min_ttl = 0
     error_code            = 403
+    response_code         = var.index_document_on_404 ? 200 : null
+    response_page_path    = var.index_document_on_404 ? "/${var.index_document}" : null
   }
 
   custom_error_response {
