@@ -1,7 +1,7 @@
 resource "aws_iam_account_password_policy" "main" {
   minimum_password_length        = 16
   max_password_age               = 14
-  password_reuse_prevention      = 30
+  password_reuse_prevention      = 24
   require_lowercase_characters   = true
   require_numbers                = true
   require_uppercase_characters   = true
