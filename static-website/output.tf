@@ -13,7 +13,3 @@ output "domain_name" {
 output "bucket_name" {
   value = var.bucket_name
 }
-
-output "bucket_endpoint" {
-  value = aws_s3_bucket.website[0].website_endpoint
-}

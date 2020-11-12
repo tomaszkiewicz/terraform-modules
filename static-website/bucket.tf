@@ -1,17 +1,17 @@
 resource "aws_s3_bucket" "website" {
-  count = var.external_bucket_endpoint != "" ? 0 : 1
-
   bucket = local.bucket_name
-  acl = "public-read"
+  acl    = "private"
   policy = <<EOF
 {
-  "Version":"2012-10-17",
-  "Statement":[
+  "Version": "2012-10-17",
+  "Statement": [
     {
       "Effect": "Allow",
-      "Principal": "*",
+      "Principal": {
+        "AWS": "${aws_cloudfront_origin_access_identity.website.iam_arn}"
+      },
       "Action": "s3:GetObject",
-      "Resource": "arn:${data.aws_partition.current.partition}:s3:::${local.bucket_name}/*"
+      "Resource": "arn:aws:s3:::${local.bucket_name}/*"
     }
   ]
 }

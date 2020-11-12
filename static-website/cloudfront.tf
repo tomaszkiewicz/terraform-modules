@@ -4,14 +4,11 @@ resource "aws_cloudfront_origin_access_identity" "website" {
 
 resource "aws_cloudfront_distribution" "website" {
   origin {
-    domain_name = var.external_bucket_endpoint != "" ? var.external_bucket_endpoint : aws_s3_bucket.website[0].website_endpoint
-    origin_id   = "S3-${local.bucket_name}"
+    domain_name = aws_s3_bucket.website.bucket_regional_domain_name
+    origin_id   = "s3"
 
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["TLSv1.2"]
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.website.cloudfront_access_identity_path
     }
   }
 
@@ -29,7 +26,7 @@ resource "aws_cloudfront_distribution" "website" {
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-${local.bucket_name}"
+    target_origin_id = "s3"
     forwarded_values {
       query_string = false
 
