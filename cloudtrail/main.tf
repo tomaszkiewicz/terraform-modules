@@ -49,7 +49,8 @@ resource "aws_cloudtrail" "main" {
   name           = "main"
   s3_bucket_name = module.s3_bucket.bucket
 
-  is_multi_region_trail = var.is_multi_region_trail
-  is_organization_trail = var.is_organization_trail
-  kms_key_id            = var.kms_key_id
+  is_multi_region_trail      = var.is_multi_region_trail
+  is_organization_trail      = var.is_organization_trail
+  kms_key_id                 = var.kms_key_id
+  enable_log_file_validation = true
 }
