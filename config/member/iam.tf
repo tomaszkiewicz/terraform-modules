@@ -24,6 +24,11 @@ module "role" {
     },
     {
       "Effect": "Allow",
+      "Action": "kms:DescribeKey",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
       "Action": [
         "s3:PutObject*"
       ],
