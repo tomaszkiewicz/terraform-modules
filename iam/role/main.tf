@@ -27,8 +27,6 @@ resource "aws_iam_role" "role" {
 }
 
 resource "aws_iam_role_policy" "policy" {
-  count = var.policy == "" ? 0 : 1
-
   name   = var.name
   role   = aws_iam_role.role.id
   policy = var.policy

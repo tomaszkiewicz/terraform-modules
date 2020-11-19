@@ -17,17 +17,13 @@ resource "aws_lambda_permission" "principal" {
 }
 
 resource "aws_iam_policy" "lambda" {
-  count = var.additional_policy == "" ? 0 : 1
-
   name   = "lambda-${var.name}"
   policy = var.additional_policy
 }
 
 resource "aws_iam_role_policy_attachment" "lambda" {
-  count = var.additional_policy == "" ? 0 : 1
-
   role       = module.lambda_role.name
-  policy_arn = join("", aws_iam_policy.lambda.*.arn)
+  policy_arn = aws_iam_policy.lambda.arn
 }
 
 module "lambda_role" {

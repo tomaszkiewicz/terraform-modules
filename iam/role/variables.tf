@@ -1,16 +1,24 @@
 variable "name" {}
-variable "assume_role_policy" { default = ""}
-variable "policy" { default = "" }
+variable "assume_role_policy" { default = "" }
+// blank policy to avoid using conditionals
+variable "policy" {
+  default = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [ ]
+}
+EOF
+}
 variable "trusted_aws_principals" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 variable "trusted_aws_services" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 variable "attach_policies" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 variable "max_session_duration" { default = 3600 }
