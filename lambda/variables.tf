@@ -43,7 +43,14 @@ variable "additional_policy" {
   default = <<EOF
 {
   "Version": "2012-10-17",
-  "Statement": []
+  "Statement": [
+    {
+      "Sid": "BlankPolicyToHackTerraformIssues",
+      "Effect": "Allow",
+      "Action": "sts:GetCallerIdentity",
+      "Resource": "*"
+    }
+  ]
 }
 EOF
 }
