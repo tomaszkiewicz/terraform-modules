@@ -17,7 +17,7 @@ resource "aws_lambda_permission" "principal" {
 }
 
 resource "aws_iam_policy" "lambda" {
-  name   = "lambda-additional-${var.name}"
+  name   = "lambda-${var.name}"
   policy = var.additional_policy
 }
 
