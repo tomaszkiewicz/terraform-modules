@@ -26,6 +26,21 @@ locals {
           "s3:x-amz-server-side-encryption": "true"
         }
       }
+    },
+    {
+      "Sid": "AllowSSLRequestsOnly",
+      "Action": "s3:*",
+      "Effect": "Deny",
+      "Resource": [
+        "arn:${data.aws_partition.current.partition}:s3:::${var.bucket}",
+        "arn:${data.aws_partition.current.partition}:s3:::${var.bucket}/*"
+      ],
+      "Condition": {
+        "Bool": {
+          "aws:SecureTransport": "false"
+        }
+      },
+      "Principal": "*"
     }
   ]
 }

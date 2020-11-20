@@ -15,3 +15,13 @@ resource "aws_cloudwatch_event_target" "schedule" {
     aws_lambda_function.lambda_source_file.*.arn,
   )
 }
+
+resource "aws_lambda_permission" "schedule" {
+  count = var.schedule_expression != "" ? 1 : 0
+
+  statement_id  = "AllowExecutionFromCloudWatchEvents"
+  action        = "lambda:InvokeFunction"
+  function_name = var.name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.schedule[0].arn
+}

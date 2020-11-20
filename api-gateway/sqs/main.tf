@@ -48,7 +48,7 @@ Action=SendMessage&MessageBody={
     "$param": "$util.escapeJavaScript($input.params().path.get($param))" #if($foreach.hasNext),#end
     #end
   }
-}"
+}
 EOF
   }
 }

@@ -1,14 +1,5 @@
-locals {
-  invoke_allow_principals = distinct(concat(
-    var.invoke_allow_principals,
-    compact([
-      var.schedule_expression != "" ? "events.amazonaws.com" : ""
-    ])
-  ))
-}
-
 resource "aws_lambda_permission" "principal" {
-  for_each = toset(local.invoke_allow_principals)
+  for_each = toset(var.invoke_allow_principals)
 
   statement_id  = replace(each.value, "/[\\.:\\/]/", "_")
   action        = "lambda:InvokeFunction"
