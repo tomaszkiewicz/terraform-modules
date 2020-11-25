@@ -9,3 +9,7 @@ output "root_resource_id" {
 output "stage_name" {
   value = var.stage_name
 }
+
+output "invoke_url" {
+  value = aws_api_gateway_deployment.deployment.invoke_url
+}
