@@ -27,6 +27,7 @@ resource "aws_api_gateway_deployment" "deployment" {
 
   depends_on = [
     aws_api_gateway_method.lambda,
+    aws_api_gateway_integration.lambda,
   ]
 
   lifecycle {
