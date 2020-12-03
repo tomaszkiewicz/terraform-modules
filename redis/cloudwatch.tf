@@ -16,6 +16,9 @@ resource "aws_cloudwatch_metric_alarm" "swap_usage" {
   ok_actions = [
     var.notifications_sns_topic_arn,
   ]
+  insufficient_data_actions = [
+    var.notifications_sns_topic_arn,
+  ]
 
   dimensions = {
     CacheClusterId = "${var.name}-00${count.index + 1}"
