@@ -36,8 +36,9 @@ resource "aws_cloudwatch_metric_alarm" "dead_letter_messages" {
   statistic           = "Average"
   threshold           = "1"
 
-  ok_actions    = [var.notifications_sns_topic_arn]
-  alarm_actions = [var.notifications_sns_topic_arn]
+  ok_actions                = [var.notifications_sns_topic_arn]
+  alarm_actions             = [var.notifications_sns_topic_arn]
+  insufficient_data_actions = [var.notifications_sns_topic_arn]
 
   dimensions = {
     QueueName = "${var.name}-dead-letter${var.fifo ? ".fifo" : ""}"
