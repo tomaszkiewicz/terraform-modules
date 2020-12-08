@@ -80,6 +80,16 @@ resource "aws_s3_bucket" "bucket" {
     }
   }
 
+  dynamic "cors_rule" {
+    for_each = var.cors_enabled ? ["hack"] : []
+
+    content {
+      allowed_headers = var.cors_allowed_headers
+      allowed_methods = var.cors_allowed_methods
+      allowed_origins = var.cors_allowed_origins
+    }
+  }
+
   policy = local.policy
 
   lifecycle_rule {
