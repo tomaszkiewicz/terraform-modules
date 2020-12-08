@@ -1,13 +1,3 @@
-variable "domain_name" {}
-variable "api_gateway_invoke_url" {}
-variable "retain_on_delete" { default = false }
-variable "certificate_arn" {}
-variable "min_ttl" { default = 0 }
-variable "default_ttl" { default = 1800 }
-variable "max_ttl" { default = 3600 }
-variable "create_dns_record" { default = true }
-variable "dns_zone_id" { default = "" }
-
 resource "aws_cloudfront_distribution" "apigw" {
   origin {
     domain_name = regex("http.\\:\\/\\/(?P<domain_name>[^/]+)(?P<path>/.*)", var.api_gateway_invoke_url).domain_name
@@ -34,9 +24,14 @@ resource "aws_cloudfront_distribution" "apigw" {
   is_ipv6_enabled  = "true"
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "apigw"
+    allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "apigw"
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = var.min_ttl
+    default_ttl            = var.default_ttl
+    max_ttl                = var.max_ttl
+
     forwarded_values {
       query_string = true
       headers = [
@@ -47,10 +42,15 @@ resource "aws_cloudfront_distribution" "apigw" {
         forward = "all"
       }
     }
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = var.min_ttl
-    default_ttl            = var.default_ttl
-    max_ttl                = var.max_ttl
+
+    dynamic "lambda_function_association" {
+      for_each = var.lambda_viewer_request != "" ? [var.lambda_viewer_request] : []
+
+      content {
+        event_type = "viewer-request"
+        lambda_arn = lambda_function_association.value
+      }
+    }
   }
 
   viewer_certificate {

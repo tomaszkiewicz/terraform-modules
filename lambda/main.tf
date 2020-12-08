@@ -6,9 +6,9 @@ resource "aws_lambda_function" "lambda_source_dir" {
   source_code_hash = data.archive_file.lambda_source.output_base64sha256
   role             = module.lambda_role.arn
   handler          = var.handler
-  timeout          = var.timeout
+  timeout          = var.edge ? 5 : var.timeout
   runtime          = var.runtime
-  publish          = var.publish
+  publish          = var.edge ? true : var.publish
   memory_size      = var.memory_size
   layers           = var.layers
   vpc_config {
@@ -16,8 +16,11 @@ resource "aws_lambda_function" "lambda_source_dir" {
     security_group_ids = var.vpc_security_group_ids
   }
 
-  environment {
-    variables = var.environment
+  dynamic "environment" {
+    for_each = var.edge ? [] : ["hack"]
+    content {
+      variables = var.environment
+    }
   }
 
   lifecycle {
@@ -35,9 +38,9 @@ resource "aws_lambda_function" "lambda_source_file" {
   source_code_hash = filebase64sha256(var.source_file)
   role             = module.lambda_role.arn
   handler          = var.handler
-  timeout          = var.timeout
+  timeout          = var.edge ? 5 : var.timeout
   runtime          = var.runtime
-  publish          = var.publish
+  publish          = var.edge ? true : var.publish
   memory_size      = var.memory_size
   layers           = var.layers
   vpc_config {
@@ -45,8 +48,11 @@ resource "aws_lambda_function" "lambda_source_file" {
     security_group_ids = var.vpc_security_group_ids
   }
 
-  environment {
-    variables = var.environment
+  dynamic "environment" {
+    for_each = var.edge ? [] : ["hack"]
+    content {
+      variables = var.environment
+    }
   }
 
   lifecycle {
@@ -64,9 +70,9 @@ resource "aws_lambda_function" "lambda_external" {
   source_code_hash = data.archive_file.lambda_source.output_base64sha256
   role             = module.lambda_role.arn
   handler          = var.handler
-  timeout          = var.timeout
+  timeout          = var.edge ? 5 : var.timeout
   runtime          = var.runtime
-  publish          = var.publish
+  publish          = var.edge ? true : var.publish
   memory_size      = var.memory_size
   layers           = var.layers
   vpc_config {
@@ -74,8 +80,11 @@ resource "aws_lambda_function" "lambda_external" {
     security_group_ids = var.vpc_security_group_ids
   }
 
-  environment {
-    variables = var.environment
+  dynamic "environment" {
+    for_each = var.edge ? [] : ["hack"]
+    content {
+      variables = var.environment
+    }
   }
 
   lifecycle {
