@@ -41,7 +41,7 @@ resource "aws_cloudfront_distribution" "website" {
     }
 
     dynamic "lambda_function_association" {
-      for_each = var.lambda_viewer_request != "" ? set(var.lambda_viewer_request) : []
+      for_each = var.lambda_viewer_request != "" ? [var.lambda_viewer_request] : []
 
       content {
         event_type = "viewer-request"
