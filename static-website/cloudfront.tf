@@ -45,7 +45,7 @@ resource "aws_cloudfront_distribution" "website" {
 
       content {
         event_type = "viewer-request"
-        lambda_arn = each.value
+        lambda_arn = lambda_function_association.value
       }
     }
   }
