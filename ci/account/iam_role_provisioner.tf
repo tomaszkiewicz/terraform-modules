@@ -13,7 +13,7 @@ locals {
       "Action": "sts:AssumeRole",
       "Condition": {
         "StringLike": {
-          "aws:PrincipalArn": "arn:${data.aws_partition.current.partition}:iam::${var.sso_account_id}:role/aws-reserved/sso.amazonaws.com/${var.sso_region}/AWSReservedSSO_${var.sso_role_name}_*"
+          "aws:PrincipalArn": "arn:${data.aws_partition.current.partition}:iam::${var.sso_account_id}:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_${var.sso_role_name}_*"
         }
       }
     }
