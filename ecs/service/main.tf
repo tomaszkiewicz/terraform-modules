@@ -15,12 +15,14 @@ variable "service_ports" {
 }
 variable "assign_public_ip" { default = false }
 variable "initial_desired_count" { default = 1 }
+variable "iam_role_arn" {}
 
 resource "aws_ecs_service" "service" {
   name            = var.name
   cluster         = var.cluster_id
   task_definition = aws_ecs_task_definition.task.arn
   desired_count   = var.initial_desired_count
+  iam_role        = var.iam_role_arn
 
   network_configuration {
     assign_public_ip = var.assign_public_ip
@@ -29,7 +31,6 @@ resource "aws_ecs_service" "service" {
     ]
     subnets = var.subnet_ids
   }
-  # iam_role        = aws_iam_role.foo.arn
 
   service_registries {
     container_name = var.service_discovery_container_name

@@ -5,3 +5,7 @@ output "security_group_id" {
 output "id" {
   value = aws_security_group.main.id
 }
+
+output "name" {
+  value = var.name
+}
