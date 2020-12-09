@@ -1,6 +1,12 @@
 variable "gitlab_registration_token" {}
 variable "gitlab_runner_instance_type" { default = "c5.large" }
 variable "max_spot_price" { default = "0.09" }
+variable "gitlab_runner_tags" {
+  type = list
+  default = [
+    "dedicated",
+  ]
+}
 
 locals {
   script = <<EOF
@@ -69,6 +75,8 @@ if [ ! -f /data/config.toml ]; then
     --config /data/config.toml \
     --executor docker+machine \
     --docker-image luktom/ws \
+    --tag-list "${join(",", var.gitlab_runner_tags)}" \
+    --run-untagged=true \
     --locked=false
 fi
 
