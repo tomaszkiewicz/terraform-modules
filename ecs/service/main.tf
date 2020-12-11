@@ -15,14 +15,15 @@ variable "service_ports" {
 }
 variable "assign_public_ip" { default = false }
 variable "initial_desired_count" { default = 1 }
-variable "iam_role_arn" {}
+variable "task_role_arn" { default = "" }
+variable "execution_role_arn" { default = "" }
 
 resource "aws_ecs_service" "service" {
-  name            = var.name
-  cluster         = var.cluster_id
-  task_definition = aws_ecs_task_definition.task.arn
-  desired_count   = var.initial_desired_count
-  iam_role        = var.iam_role_arn
+  name             = var.name
+  cluster          = var.cluster_id
+  task_definition  = aws_ecs_task_definition.task.arn
+  desired_count    = var.initial_desired_count
+  platform_version = "1.4.0"
 
   network_configuration {
     assign_public_ip = var.assign_public_ip
@@ -35,6 +36,12 @@ resource "aws_ecs_service" "service" {
   service_registries {
     container_name = var.service_discovery_container_name
     registry_arn   = aws_service_discovery_service.service.arn
+  }
+
+  capacity_provider_strategy {
+    base              = 0
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 1
   }
 
   # lifecycle {
@@ -77,6 +84,11 @@ resource "aws_ecs_task_definition" "task" {
   cpu                   = var.cpu
   memory                = var.memory
   container_definitions = var.container_definitions
+  task_role_arn         = var.task_role_arn
+  execution_role_arn    = var.execution_role_arn
+  requires_compatibilities = [
+    "FARGATE",
+  ]
   #   <<EOF
   # [
   #   {
@@ -93,8 +105,5 @@ resource "aws_ecs_task_definition" "task" {
   #   }
   # ]
 
-  # task_role_arn = ""
-  requires_compatibilities = [
-    "FARGATE",
-  ]
+
 }

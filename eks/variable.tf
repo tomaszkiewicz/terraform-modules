@@ -15,18 +15,42 @@ variable "medium_asg_max_size" { default = 3 }
 variable "medium_asg_min_size" { default = 1 }
 variable "medium_asg_desired_capacity" { default = 1 }
 variable "medium_asg_on_demand_base_capacity" { default = 1 }
+variable "medium_asg_instance_types" {
+  type = list
+  default = [
+    "t3.medium",
+    "t2.medium",
+    "t3a.medium",
+  ]
+}
 
 variable "large_asg_enabled" { default = false }
 variable "large_asg_max_size" { default = 3 }
 variable "large_asg_min_size" { default = 1 }
 variable "large_asg_desired_capacity" { default = 1 }
 variable "large_asg_on_demand_base_capacity" { default = 1 }
+variable "large_asg_instance_types" {
+  type = list
+  default = [
+    "t3.large",
+    "t2.large",
+    "t3a.large",
+  ]
+}
 
 variable "gitlab_ci_runner_medium_asg_enabled" { default = false }
 variable "gitlab_ci_runner_medium_asg_max_size" { default = 3 }
 variable "gitlab_ci_runner_medium_asg_min_size" { default = 0 }
 variable "gitlab_ci_runner_medium_asg_desired_capacity" { default = 0 }
 variable "gitlab_ci_runner_medium_asg_on_demand_base_capacity" { default = 0 }
+variable "gitlab_ci_runner_medium_instance_types" {
+  type = list
+  default = [
+    "t3.medium",
+    "t2.medium",
+    "t3a.medium",
+  ]
+}
 
 variable "bootstrap_use_max_pods" { default = false }
 

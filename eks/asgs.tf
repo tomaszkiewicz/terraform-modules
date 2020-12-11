@@ -3,7 +3,7 @@ locals {
     ami_id = var.override_ami_id
   } : {}, {
     name                    = "medium"
-    override_instance_types = ["t3.medium", "t2.medium", "t3a.medium"]
+    override_instance_types = var.medium_asg_instance_types
     asg_max_size            = var.medium_asg_max_size
     asg_min_size            = var.medium_asg_min_size
     asg_desired_capacity    = var.medium_asg_desired_capacity
@@ -34,7 +34,7 @@ locals {
     ami_id = var.override_ami_id
   } : {}, {
     name                    = "large"
-    override_instance_types = ["t3.large", "t2.large", "t3a.large"]
+    override_instance_types = var.large_asg_instance_types
     asg_max_size            = var.large_asg_max_size
     asg_min_size            = var.large_asg_min_size
     asg_desired_capacity    = var.large_asg_desired_capacity
@@ -65,7 +65,7 @@ locals {
     ami_id = var.override_ami_id
   } : {}, {
     name                    = "gitlab-ci-runner-medium"
-    override_instance_types = ["t3.medium", "t2.medium", "t3a.medium"]
+    override_instance_types = var.gitlab_ci_runner_instance_types
     asg_max_size            = var.gitlab_ci_runner_medium_asg_max_size
     asg_min_size            = var.gitlab_ci_runner_medium_asg_min_size
     asg_desired_capacity    = var.gitlab_ci_runner_medium_asg_desired_capacity
