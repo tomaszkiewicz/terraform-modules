@@ -65,7 +65,7 @@ locals {
     ami_id = var.override_ami_id
   } : {}, {
     name                    = "gitlab-ci-runner-medium"
-    override_instance_types = var.gitlab_ci_runner_instance_types
+    override_instance_types = var.gitlab_ci_runner_medium_instance_types
     asg_max_size            = var.gitlab_ci_runner_medium_asg_max_size
     asg_min_size            = var.gitlab_ci_runner_medium_asg_min_size
     asg_desired_capacity    = var.gitlab_ci_runner_medium_asg_desired_capacity
