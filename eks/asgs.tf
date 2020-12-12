@@ -1,9 +1,10 @@
 locals {
   medium_asg_launch_template = merge(var.override_ami_id != "" ? {
     ami_id = var.override_ami_id
-  } : {}, {
+    } : {}, {
     name                    = "medium"
     override_instance_types = var.medium_asg_instance_types
+    cpu_credits             = var.medium_asg_cpu_credits
     asg_max_size            = var.medium_asg_max_size
     asg_min_size            = var.medium_asg_min_size
     asg_desired_capacity    = var.medium_asg_desired_capacity
@@ -32,9 +33,10 @@ locals {
 
   large_asg_launch_template = merge(var.override_ami_id != "" ? {
     ami_id = var.override_ami_id
-  } : {}, {
+    } : {}, {
     name                    = "large"
     override_instance_types = var.large_asg_instance_types
+    cpu_credits             = var.large_asg_cpu_credits
     asg_max_size            = var.large_asg_max_size
     asg_min_size            = var.large_asg_min_size
     asg_desired_capacity    = var.large_asg_desired_capacity
@@ -63,7 +65,7 @@ locals {
 
   gitlab_ci_runner_medium_asg_launch_template = merge(var.override_ami_id != "" ? {
     ami_id = var.override_ami_id
-  } : {}, {
+    } : {}, {
     name                    = "gitlab-ci-runner-medium"
     override_instance_types = var.gitlab_ci_runner_medium_instance_types
     asg_max_size            = var.gitlab_ci_runner_medium_asg_max_size
