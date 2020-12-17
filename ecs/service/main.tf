@@ -36,6 +36,7 @@ resource "aws_ecs_service" "service" {
   service_registries {
     container_name = var.service_discovery_container_name
     registry_arn   = aws_service_discovery_service.service.arn
+    container_port = var.service_ports[0]
   }
 
   capacity_provider_strategy {
@@ -70,12 +71,21 @@ resource "aws_service_discovery_service" "service" {
       type = "A"
     }
 
+    dns_records {
+      ttl  = 10
+      type = "SRV"
+    }
+
     routing_policy = "MULTIVALUE"
   }
 
-  health_check_custom_config {
-    failure_threshold = 1
-  }
+  # health_check_config {
+  #   type = "HTTP"
+  # }
+
+  # health_check_custom_config {
+  #   failure_threshold = 1
+  # }
 }
 
 resource "aws_ecs_task_definition" "task" {
