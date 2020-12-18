@@ -1,23 +1,3 @@
-variable "cluster_id" {}
-variable "subnet_ids" {}
-variable "name" {}
-variable "service_discovery_container_name" {}
-variable "service_discovery_namespace_id" {}
-variable "cpu" { default = 256 }
-variable "memory" { default = 512 }
-variable "container_definitions" {}
-variable "vpc_id" {}
-variable "service_ports" {
-  type = list
-  default = [
-    80,
-  ]
-}
-variable "assign_public_ip" { default = false }
-variable "initial_desired_count" { default = 1 }
-variable "task_role_arn" { default = "" }
-variable "execution_role_arn" { default = "" }
-
 resource "aws_ecs_service" "service" {
   name             = var.name
   cluster          = var.cluster_id
@@ -36,7 +16,7 @@ resource "aws_ecs_service" "service" {
   service_registries {
     container_name = var.service_discovery_container_name
     registry_arn   = aws_service_discovery_service.service.arn
-    container_port = var.service_ports[0]
+    container_port = var.service_port
   }
 
   capacity_provider_strategy {
@@ -57,7 +37,9 @@ module "sg" {
 
   name   = "ecs-service-${var.name}"
   vpc_id = var.vpc_id
-  ports  = var.service_ports
+  ports = [
+    var.service_port,
+  ]
 }
 
 resource "aws_service_discovery_service" "service" {
@@ -89,31 +71,66 @@ resource "aws_service_discovery_service" "service" {
 }
 
 resource "aws_ecs_task_definition" "task" {
-  family                = var.name
-  network_mode          = "awsvpc"
-  cpu                   = var.cpu
-  memory                = var.memory
-  container_definitions = var.container_definitions
-  task_role_arn         = var.task_role_arn
-  execution_role_arn    = var.execution_role_arn
+  family             = var.name
+  network_mode       = "awsvpc"
+  cpu                = var.cpu
+  memory             = var.memory
+  task_role_arn      = var.task_role_arn
+  execution_role_arn = var.execution_role_arn
   requires_compatibilities = [
     "FARGATE",
   ]
-  #   <<EOF
-  # [
-  #   {
-  #     "name": "nginx",
-  #     "image": "nginx",
-  #     "essential": true
-  #   }
-  # ]
-  # EOF
-  # "secrets": [
-  #   {
-  #     "name": "environment_variable_name",
-  #     "valueFrom": "arn:aws:ssm:region:aws_account_id:parameter/parameter_name"
-  #   }
-  # ]
 
-
+  container_definitions = jsonencode([
+    {
+      name : var.service_discovery_container_name
+      image : "${var.container_image}:${var.container_image_tag}"
+      essential : true
+      portMappings : [
+        {
+          hostPort : var.service_port
+          protocol : "tcp"
+          containerPort : var.service_port
+        },
+      ]
+      environment : [
+        for k, v in var.environment : {
+          name : k
+          value : v
+        }
+      ]
+      secrets : [
+        for k, v in var.secrets: {
+          name : k
+          valueFrom : v
+        }
+      ]
+      logConfiguration : {
+        logDriver : "awslogs"
+        options : {
+          awslogs-group : aws_cloudwatch_log_group.service.name
+          awslogs-region : data.aws_region.current.name
+          awslogs-stream-prefix : var.service_discovery_container_name
+        }
+      },
+    },
+    {
+      name : "healthcheck"
+      image : "luktom/ws"
+      essential : true
+      healthCheck : {
+        command : [
+          "CMD-SHELL",
+          "curl -s -f http://localhost:${var.service_port}${var.health_check_path} || exit 1"
+        ]
+        retries : var.health_check_retries
+        timeout : var.health_check_timeout
+        interval : var.health_check_interval
+        startPeriod : var.health_check_start_period
+      }
+      command: [
+        "pause"
+      ]
+    }
+  ])
 }
