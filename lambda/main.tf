@@ -15,6 +15,7 @@ resource "aws_lambda_function" "lambda_source_dir" {
     subnet_ids         = var.vpc_subnet_ids
     security_group_ids = var.vpc_security_group_ids
   }
+  reserved_concurrent_executions = var.reserved_concurrent_executions
 
   dynamic "environment" {
     for_each = var.edge ? [] : ["hack"]
@@ -47,6 +48,7 @@ resource "aws_lambda_function" "lambda_source_file" {
     subnet_ids         = var.vpc_subnet_ids
     security_group_ids = var.vpc_security_group_ids
   }
+  reserved_concurrent_executions = var.reserved_concurrent_executions
 
   dynamic "environment" {
     for_each = var.edge ? [] : ["hack"]
@@ -79,6 +81,7 @@ resource "aws_lambda_function" "lambda_external" {
     subnet_ids         = var.vpc_subnet_ids
     security_group_ids = var.vpc_security_group_ids
   }
+  reserved_concurrent_executions = var.reserved_concurrent_executions
 
   dynamic "environment" {
     for_each = var.edge ? [] : ["hack"]

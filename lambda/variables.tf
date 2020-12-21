@@ -8,6 +8,7 @@ variable "edge" { default = false }
 variable "timeout" { default = 10 }
 variable "publish" { default = false }
 variable "memory_size" { default = 128 }
+variable "reserved_concurrent_executions" { default = -1 }
 variable "layers" {
   type    = list
   default = []
