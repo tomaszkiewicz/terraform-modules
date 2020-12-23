@@ -3,7 +3,7 @@ variable "subnet_ids" {}
 variable "name" {}
 variable "vpc_id" {}
 variable "container_image" {}
-variable "container_image_tag" { default = "latest" }
+variable "container_image_tag" { default = "" }
 variable "service_discovery_namespace_id" {}
 variable "service_discovery_container_name" { default = "app" }
 variable "cpu" { default = 256 }
