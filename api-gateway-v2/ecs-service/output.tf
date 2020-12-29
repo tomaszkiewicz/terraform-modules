@@ -9,3 +9,7 @@ output "api_id" {
 output "default_integration_id" {
   value = aws_apigatewayv2_integration.default.id
 }
+
+output "vpc_link_id" {
+  value = aws_apigatewayv2_vpc_link.service.id
+}
