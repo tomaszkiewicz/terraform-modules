@@ -7,5 +7,5 @@ output "api_id" {
 }
 
 output "default_integration_id" {
-  value = aws_apigatewayv2_intergration.default.id
+  value = aws_apigatewayv2_integration.default.id
 }
