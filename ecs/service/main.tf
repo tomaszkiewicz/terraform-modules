@@ -128,7 +128,7 @@ resource "aws_ecs_task_definition" "task" {
       healthCheck : {
         command : [
           "CMD-SHELL",
-          "curl -s -f http://localhost:${var.service_port}${var.health_check_path} || exit 1"
+          "curl -s -f http://localhost:${var.health_check_port != "" ? var.health_check_port : var.service_port}${var.health_check_path} || exit 1"
         ]
         retries : var.health_check_retries
         timeout : var.health_check_timeout

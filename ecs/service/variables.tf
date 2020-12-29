@@ -23,6 +23,7 @@ variable "secrets" {
   default = {}
 }
 variable "health_check_path" { default = "/health" }
+variable "health_check_port" { default = "" } // uses service_port when not set
 variable "health_check_retries" { default = 3 }
 variable "health_check_timeout" { default = 5 }
 variable "health_check_interval" { default = 5 }
