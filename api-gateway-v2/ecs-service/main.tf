@@ -19,6 +19,7 @@ resource "aws_apigatewayv2_integration" "default" {
 }
 
 resource "aws_apigatewayv2_route" "default" {
+  count          = var.create_default_route ? 1 : 0
   api_id         = aws_apigatewayv2_api.main.id
   route_key      = "$default"
   operation_name = "DefaultRoute"
@@ -26,8 +27,7 @@ resource "aws_apigatewayv2_route" "default" {
 }
 
 resource "aws_apigatewayv2_stage" "main" {
-  api_id = aws_apigatewayv2_api.main.id
-  # deployment_id = aws_apigatewayv2_deployment.main.id
+  api_id      = aws_apigatewayv2_api.main.id
   name        = "live"
   auto_deploy = true
 
@@ -38,19 +38,3 @@ resource "aws_apigatewayv2_stage" "main" {
     ]
   }
 }
-
-# resource "aws_apigatewayv2_deployment" "main" {
-#   api_id      = aws_apigatewayv2_api.main.id
-#   description = "live"
-
-#   # triggers = {
-#   #   redeployment = sha1(join(",", list(
-#   #     jsonencode(aws_apigatewayv2_integration.default),
-#   #     jsonencode(aws_apigatewayv2_route.default),
-#   #   )))
-#   # }
-
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-# }

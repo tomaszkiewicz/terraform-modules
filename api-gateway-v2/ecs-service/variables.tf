@@ -10,3 +10,4 @@ variable "subnet_ids" {
 variable "security_group_ids" {
   type = list
 }
+variable "create_default_route" { default = true }
