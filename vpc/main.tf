@@ -4,8 +4,8 @@ module "vpc" {
   name = var.name
   cidr = var.cidr_block
 
-  azs = data.aws_availability_zones.available.names
-
+  azs = slice(data.aws_availability_zones.available.names, 0, var.max_azs+1)
+  
   public_subnets = [
     for az in data.aws_availability_zones.available.names :
     cidrsubnet(var.cidr_block, 8, index(data.aws_availability_zones.available.names, az) + 129)
