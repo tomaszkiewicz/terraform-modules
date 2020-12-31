@@ -1,18 +1,22 @@
+locals {
+  sliced_azs = slice(data.aws_availability_zones.available.names, 0, var.max_azs+1)
+}
+
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
   name = var.name
   cidr = var.cidr_block
 
-  azs = slice(data.aws_availability_zones.available.names, 0, var.max_azs+1)
-  
+  azs = locals.sliced_azs
+
   public_subnets = [
-    for az in data.aws_availability_zones.available.names :
-    cidrsubnet(var.cidr_block, 8, index(data.aws_availability_zones.available.names, az) + 129)
+    for az in local.sliced_azs :
+    cidrsubnet(var.cidr_block, 8, index(local.sliced_azs, az) + 129)
   ]
   private_subnets = [
-    for az in data.aws_availability_zones.available.names :
-    cidrsubnet(var.cidr_block, 8, index(data.aws_availability_zones.available.names, az) + 1)
+    for az in local.sliced_azs :
+    cidrsubnet(var.cidr_block, 8, index(local.sliced_azs, az) + 1)
   ]
 
   public_subnet_tags = var.eks_cluster_name == "" ? {} : {
