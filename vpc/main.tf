@@ -1,5 +1,5 @@
 locals {
-  sliced_azs = slice(data.aws_availability_zones.available.names, 0, var.max_azs+1)
+  sliced_azs = slice(data.aws_availability_zones.available.names, 0, var.max_azs)
 }
 
 module "vpc" {
