@@ -8,7 +8,7 @@ module "vpc" {
   name = var.name
   cidr = var.cidr_block
 
-  azs = locals.sliced_azs
+  azs = local.sliced_azs
 
   public_subnets = [
     for az in local.sliced_azs :
