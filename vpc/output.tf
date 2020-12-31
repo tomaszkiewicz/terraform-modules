@@ -27,9 +27,9 @@ output "public_subnet_ids" {
 }
 
 output "public_subnets_ids_az" {
-  value = zipmap(data.aws_availability_zones.available.names, module.vpc.public_subnets)
+  value = zipmap(local.sliced_azs, module.vpc.public_subnets)
 }
 
 output "private_subnets_ids_az" {
-  value = zipmap(data.aws_availability_zones.available.names, module.vpc.private_subnets)
+  value = zipmap(local.sliced_azs, module.vpc.private_subnets)
 }
