@@ -2,8 +2,10 @@ variable "monthly_budget" {
   type = number
 }
 variable "alert_mails" {
-  type = list
+  type    = list
+  default = []
 }
+variable "notifications_sns_topic_arn" { default = "" }
 variable "actual_threshold_percent" { default = 100 }
 variable "forecast_threshold_percent" { default = 110 }
 
@@ -23,6 +25,9 @@ resource "aws_budgets_budget" "monthly" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = var.alert_mails
+    subscriber_sns_topic_arns = [
+      var.notifications_sns_topic_arn,
+    ]
   }
 
   notification {
@@ -31,5 +36,9 @@ resource "aws_budgets_budget" "monthly" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "FORECASTED"
     subscriber_email_addresses = var.alert_mails
+    subscriber_sns_topic_arns = [
+      var.notifications_sns_topic_arn,
+    ]
   }
+
 }
