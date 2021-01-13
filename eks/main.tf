@@ -1,21 +1,25 @@
 data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
+  count = var.create_eks ? 1 : 0
+  name  = module.eks.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
+  count = var.create_eks ? 1 : 0
+  name  = module.eks.cluster_id
 }
 
 provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
+  host                   = element(concat(data.aws_eks_cluster.cluster[*].endpoint, list("")), 0)
+  cluster_ca_certificate = base64decode(element(concat(data.aws_eks_cluster.cluster[*].certificate_authority.0.data, list("")), 0))
+  token                  = element(concat(data.aws_eks_cluster_auth.cluster[*].token, list("")), 0)
   load_config_file       = false
 }
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "13.2.1"
+
+  create_eks = var.create_eks
 
   worker_ami_owner_id         = var.override_ami_owner_id != "" ? var.override_ami_owner_id : data.aws_partition.current.partition == "aws-cn" ? "961992271922" : "602401143452"
   worker_ami_owner_id_windows = data.aws_partition.current.partition == "aws-cn" ? "016951021795" : "801119661308"

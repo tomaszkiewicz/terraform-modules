@@ -1,5 +1,6 @@
 variable "cluster_name" {}
 variable "cluster_version" { default = "1.15" }
+variable "create_eks" { default = true }
 variable "tenant_name" {}
 variable "subnet_ids" {}
 variable "key_name" {}
