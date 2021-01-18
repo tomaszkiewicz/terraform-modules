@@ -17,6 +17,12 @@ resource "aws_iam_role_policy_attachment" "lambda" {
   policy_arn = aws_iam_policy.lambda.arn
 }
 
+resource "aws_iam_role_policy_attachment" "lambda_insights" {
+  count      = var.enable_lambda_insights ? 1 : 0
+  role       = module.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
+}
+
 module "lambda_role" {
   source = "../iam/role"
 

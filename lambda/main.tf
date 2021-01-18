@@ -10,7 +10,7 @@ resource "aws_lambda_function" "lambda_source_dir" {
   runtime          = var.runtime
   publish          = var.edge ? true : var.publish
   memory_size      = var.memory_size
-  layers           = var.layers
+  layers           = local.layers
   vpc_config {
     subnet_ids         = var.vpc_subnet_ids
     security_group_ids = var.vpc_security_group_ids
@@ -43,7 +43,7 @@ resource "aws_lambda_function" "lambda_source_file" {
   runtime          = var.runtime
   publish          = var.edge ? true : var.publish
   memory_size      = var.memory_size
-  layers           = var.layers
+  layers           = local.layers
   vpc_config {
     subnet_ids         = var.vpc_subnet_ids
     security_group_ids = var.vpc_security_group_ids
@@ -76,7 +76,7 @@ resource "aws_lambda_function" "lambda_external" {
   runtime          = var.runtime
   publish          = var.edge ? true : var.publish
   memory_size      = var.memory_size
-  layers           = var.layers
+  layers           = local.layers
   vpc_config {
     subnet_ids         = var.vpc_subnet_ids
     security_group_ids = var.vpc_security_group_ids

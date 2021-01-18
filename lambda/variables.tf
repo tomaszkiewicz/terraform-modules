@@ -19,6 +19,9 @@ variable "logs_destination_filter_pattern" { default = "" }
 variable "schedule_expression" { default = "" }
 variable "notifications_sns_topic_arn" { default = "" }
 
+variable "enable_lambda_insights" { default = false }
+variable "lambda_insights_version" { default = 14 }
+
 variable "vpc_subnet_ids" {
   default = []
   type    = list
