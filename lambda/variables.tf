@@ -21,6 +21,7 @@ variable "notifications_sns_topic_arn" { default = "" }
 
 variable "enable_lambda_insights" { default = false }
 variable "lambda_insights_version" { default = 14 }
+variable "lambda_insights_memory_utilization_threshold" { default = 90 }
 
 variable "vpc_subnet_ids" {
   default = []
