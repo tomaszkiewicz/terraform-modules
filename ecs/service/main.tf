@@ -122,8 +122,8 @@ resource "aws_ecs_task_definition" "task" {
           }
         },
       },
-      length(var.entrypoint) == 0 ? {} : {
-        entryPoint : var.entrypoint
+      length(var.entryPoint) == 0 ? {} : {
+        entryPoint : var.entryPoint
       },
       length(var.command) == 0 ? {} : {
         command : var.command
