@@ -30,9 +30,9 @@ variable "health_check_interval" { default = 5 }
 variable "health_check_start_period" { default = 30 }
 variable "entryPoint" {
   type    = list
-  defualt = []
+  default = []
 }
 variable "command" {
   type    = list
-  defualt = []
+  default = []
 }
