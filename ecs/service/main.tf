@@ -89,38 +89,46 @@ resource "aws_ecs_task_definition" "task" {
   ]
 
   container_definitions = jsonencode([
-    {
-      name : var.service_discovery_container_name
-      image : "${var.container_image}:${var.container_image_tag == "" ? data.aws_ecs_container_definition.existing[0].image_digest : var.container_image_tag}"
-      essential : true
-      portMappings : [
-        {
-          hostPort : var.service_port
-          protocol : "tcp"
-          containerPort : var.service_port
+    merge(
+      {
+        name : var.service_discovery_container_name
+        image : "${var.container_image}:${var.container_image_tag == "" ? data.aws_ecs_container_definition.existing[0].image_digest : var.container_image_tag}"
+        essential : true
+        portMappings : [
+          {
+            hostPort : var.service_port
+            protocol : "tcp"
+            containerPort : var.service_port
+          },
+        ]
+        environment : [
+          for k, v in var.environment : {
+            name : k
+            value : v
+          }
+        ]
+        secrets : [
+          for k, v in var.secrets : {
+            name : k
+            valueFrom : v
+          }
+        ]
+        logConfiguration : {
+          logDriver : "awslogs"
+          options : {
+            awslogs-group : aws_cloudwatch_log_group.service.name
+            awslogs-region : data.aws_region.current.name
+            awslogs-stream-prefix : var.service_discovery_container_name
+          }
         },
-      ]
-      environment : [
-        for k, v in var.environment : {
-          name : k
-          value : v
-        }
-      ]
-      secrets : [
-        for k, v in var.secrets: {
-          name : k
-          valueFrom : v
-        }
-      ]
-      logConfiguration : {
-        logDriver : "awslogs"
-        options : {
-          awslogs-group : aws_cloudwatch_log_group.service.name
-          awslogs-region : data.aws_region.current.name
-          awslogs-stream-prefix : var.service_discovery_container_name
-        }
       },
-    },
+      length(var.entrypoint) == 0 ? {} : {
+        entryPoint : var.entrypoint
+      },
+      length(var.command) == 0 ? {} : {
+        command : var.command
+      },
+    ),
     {
       name : "healthcheck"
       image : "luktom/ws"
@@ -135,7 +143,7 @@ resource "aws_ecs_task_definition" "task" {
         interval : var.health_check_interval
         startPeriod : var.health_check_start_period
       }
-      command: [
+      command : [
         "pause"
       ]
     }

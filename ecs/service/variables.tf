@@ -28,3 +28,11 @@ variable "health_check_retries" { default = 3 }
 variable "health_check_timeout" { default = 5 }
 variable "health_check_interval" { default = 5 }
 variable "health_check_start_period" { default = 30 }
+variable "entrypoint" {
+  type    = list
+  defualt = []
+}
+variable "command" {
+  type    = list
+  defualt = []
+}
