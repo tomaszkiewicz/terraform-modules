@@ -2,6 +2,18 @@ output "cluster_id" {
   value = module.ecs.this_ecs_cluster_id
 }
 
+output "id" {
+  value = module.ecs.this_ecs_cluster_id
+}
+
+output "cluster_arn" {
+  value = module.ecs.this_ecs_cluster_id
+}
+
+output "arn" {
+  value = module.ecs.this_ecs_cluster_id
+}
+
 output "cluster_name" {
   value = var.cluster_name
 }
