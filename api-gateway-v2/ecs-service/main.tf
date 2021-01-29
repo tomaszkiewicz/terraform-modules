@@ -1,6 +1,19 @@
 resource "aws_apigatewayv2_api" "main" {
   name          = var.name
   protocol_type = "HTTP"
+
+  dynamic "cors_configuration" {
+    for_each = var.enable_cors ? ["hack"] : []
+
+    content {
+      allow_headers     = var.cors_allow_headers
+      allow_methods     = var.cors_allow_methods
+      allow_origins     = var.cors_allow_origins
+      max_age           = var.cors_max_age
+      allow_credentials = var.cors_allow_credentials
+      expose_headers    = var.cors_expose_headers
+    }
+  }
 }
 
 resource "aws_apigatewayv2_integration" "default" {
