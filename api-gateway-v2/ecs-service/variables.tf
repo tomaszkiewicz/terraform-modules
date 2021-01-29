@@ -14,7 +14,7 @@ variable "create_default_route" { default = true }
 
 variable "enable_cors" { default = false }
 
-variable "allow_headers" {
+variable "cors_allow_headers" {
   description = "The set of allowed HTTP headers"
   type        = list(string)
 
@@ -27,7 +27,7 @@ variable "allow_headers" {
   ]
 }
 
-variable "allow_methods" {
+variable "cors_allow_methods" {
   description = "The set of allowed HTTP methods"
   type        = list(string)
 
@@ -42,24 +42,24 @@ variable "allow_methods" {
   ]
 }
 
-variable "allow_origins" {
+variable "cors_allow_origins" {
   description = "The set of allowed origins"
   type        = list(string)
   default     = ["*"]
 }
 
-variable "max_age" {
+variable "cors_max_age" {
   description = "The number of seconds that the browser should cache preflight request results"
   type        = string
   default     = "7200"
 }
 
-variable "allow_credentials" {
+variable "cors_allow_credentials" {
   description = "Whether credentials are included in the CORS request"
   default     = false
 }
 
-variable "expose_headers" {
+variable "cors_expose_headers" {
   description = "The set of exposed HTTP headers"
   type        = list(string)
   default     = []
