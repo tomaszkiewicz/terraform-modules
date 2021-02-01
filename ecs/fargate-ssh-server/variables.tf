@@ -24,5 +24,7 @@ variable "secrets" {
   type    = map
   default = {}
 }
-variable "efs_filesystem_id" {}
+variable "efs_filesystem_id" { default = "" }
 variable "notifications_sns_topic_arn" { default = "" }
+
+variable "service_discovery_namespace_id" { default = "" }

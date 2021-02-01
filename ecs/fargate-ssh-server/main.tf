@@ -13,6 +13,15 @@ resource "aws_ecs_service" "service" {
     subnets = var.subnet_ids
   }
 
+  dynamic "service_registries" {
+    for_each = var.service_discovery_namespace_id == "" ? [] : [""]
+    content {
+      container_name = "app"
+      registry_arn   = aws_service_discovery_service.service[0].arn
+      container_port = var.service_port
+    }
+  }
+
   capacity_provider_strategy {
     base              = 0
     capacity_provider = "FARGATE_SPOT"
@@ -24,6 +33,28 @@ resource "aws_ecs_service" "service" {
   #     desired_count,
   #   ]
   # }
+}
+
+resource "aws_service_discovery_service" "service" {
+  count = var.service_discovery_namespace_id == "" ? 0 : 1
+
+  name = var.name
+
+  dns_config {
+    namespace_id = var.service_discovery_namespace_id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    dns_records {
+      ttl  = 10
+      type = "SRV"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
 }
 
 module "sg" {
