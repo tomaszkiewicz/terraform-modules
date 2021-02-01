@@ -19,11 +19,11 @@ output "cluster_name" {
 }
 
 output "namespace_id" {
-  value = join("", aws_service_discovery_public_dns_namespace.*.id, aws_service_discovery_private_dns_namespace.id)
+  value = join("", aws_service_discovery_public_dns_namespace.ecs.*.id, aws_service_discovery_private_dns_namespace.ecs.*.id)
 }
 
 output "namespace_hosted_zone_id" {
-  value = join("", aws_service_discovery_public_dns_namespace.*.hosted_zone)
+  value = join("", aws_service_discovery_public_dns_namespace.ecs.*.hosted_zone)
 }
 
 output "service_discovery_domain" {
