@@ -13,7 +13,14 @@ variable "execution_role_arn" { default = "" }
 variable "container_image" { default = "luktom/ws" }
 variable "container_image_tag" { default = "latest" }
 
-variable "ssh_public_keys" {}
+variable "ssh_public_keys" {
+  type    = list
+  default = []
+}
+variable "tunnel_only_ssh_public_keys" {
+  type    = list
+  default = []
+}
 
 variable "logs_retention_days" { default = 7 }
 variable "environment" {

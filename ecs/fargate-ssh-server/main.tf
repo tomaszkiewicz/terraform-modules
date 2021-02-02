@@ -95,17 +95,12 @@ resource "aws_ecs_task_definition" "task" {
           containerPort : var.service_port
         },
       ]
-      environment : concat(
-        [
-          {
-            name : "SSH_PUBLIC_KEYS"
-            value : var.ssh_public_keys
-          },
-          ], [
-          for k, v in var.environment : {
-            name : k
-            value : v
-          }
+      environment : concat([
+        ], [
+        for k, v in var.environment : {
+          name : k
+          value : v
+        }
       ])
       secrets : concat([
         ], [
@@ -128,13 +123,22 @@ resource "aws_ecs_task_definition" "task" {
           "sed -i \"s/.*PasswordAuthentication.*/PasswordAuthentication no/g\" /etc/ssh/sshd_config",
           "sed -i \"s/.*AllowTcpForwarding.*/AllowTcpForwarding yes/g\" /etc/ssh/sshd_config",
           "mkdir -p /root/.ssh",
-          "echo \"${var.ssh_public_keys}\" > /root/.ssh/authorized_keys",
+          "echo \"${join("\n", var.ssh_public_keys)}\" > /root/.ssh/authorized_keys",
+          "echo \"${join("\n", formatlist("command=\\\"/bin/tunnel\\\" %s", var.tunnel_only_ssh_public_keys))}\" >> /root/.ssh/authorized_keys",
           "echo \"Authorized keys:\"",
           "cat /root/.ssh/authorized_keys",
           "chmod 700 /root/.ssh",
           "chmod 600 /root/.ssh/authorized_keys",
           "echo \"root:root\" | chpasswd",
           "echo -n > /etc/motd",
+          "echo \"#!/bin/bash\" > /bin/tunnel",
+          "echo \"echo You can now establish a connection using ssh tunnel.\" >> /bin/tunnel",
+          "echo \"echo Hit Ctrl+C to terminate.\" >> /bin/tunnel",
+          "echo \"while true\" >> /bin/tunnel",
+          "echo \"do\" >> /bin/tunnel",
+          "echo \"  sleep 100\" >> /bin/tunnel",
+          "echo \"done\" >> /bin/tunnel",
+          "chmod +x /bin/tunnel",
           "/usr/sbin/sshd -D",
         ])
       ]
