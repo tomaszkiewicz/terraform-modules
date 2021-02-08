@@ -39,14 +39,14 @@ resource "aws_cloudfront_distribution" "website" {
         forward = "none"
       }
     }
+  }
 
-    dynamic "lambda_function_association" {
-      for_each = var.lambda_viewer_request != "" ? [var.lambda_viewer_request] : []
+  dynamic "lambda_function_association" {
+    for_each = var.lambda_viewer_request != "" ? [var.lambda_viewer_request] : []
 
-      content {
-        event_type = "viewer-request"
-        lambda_arn = lambda_function_association.value
-      }
+    content {
+      event_type = "viewer-request"
+      lambda_arn = lambda_function_association.value
     }
   }
 
