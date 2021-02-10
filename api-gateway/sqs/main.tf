@@ -29,10 +29,12 @@ resource "aws_api_gateway_resource" "sqs_proxy" {
 }
 
 resource "aws_api_gateway_method" "method_sqs_proxy" {
-  rest_api_id   = var.rest_api_id
-  resource_id   = aws_api_gateway_resource.sqs_proxy.id
-  http_method   = "POST"
-  authorization = "NONE"
+  rest_api_id          = var.rest_api_id
+  resource_id          = aws_api_gateway_resource.sqs_proxy.id
+  http_method          = "POST"
+  authorization        = "NONE"
+  request_validator_id = var.request_validator_id
+  request_models       = var.request_models
 
   request_parameters = {
     "method.request.path.proxy" = false
@@ -53,7 +55,7 @@ resource "aws_api_gateway_integration" "api" {
   }
 
   request_templates = {
-    "application/json" = local.request_template
+    "application/json"                  = local.request_template
     "application/x-www-form-urlencoded" = local.request_template
   }
 }
