@@ -2,6 +2,15 @@ module "deployer" {
   source = "../../iam/user"
 
   name = "ci-deployer"
+}
+
+module "deployer_group" {
+  source = "../../iam/group"
+
+  name = "ci-deployer"
+  members = [
+    module.deployer.name,
+  ]
   policy = <<EOF
 {
   "Version": "2012-10-17",
