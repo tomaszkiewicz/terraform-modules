@@ -2,6 +2,15 @@ module "provisioner" {
   source = "../../iam/user"
 
   name = "ci-provisioner"
+}
+
+module "provisioner_group" {
+  source = "../../iam/group"
+
+  name = "ci-provisioner"
+  members = [
+    module.provisioner.name,
+  ]
   policy = <<EOF
 {
   "Version": "2012-10-17",
