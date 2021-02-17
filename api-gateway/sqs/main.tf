@@ -32,7 +32,8 @@ resource "aws_api_gateway_method" "method_sqs_proxy" {
   rest_api_id          = var.rest_api_id
   resource_id          = aws_api_gateway_resource.sqs_proxy.id
   http_method          = "POST"
-  authorization        = "NONE"
+  authorization        = var.authorization
+  authorizer_id        = var.authorizer_id
   request_validator_id = var.request_validator_id
   request_models       = var.request_models
 
