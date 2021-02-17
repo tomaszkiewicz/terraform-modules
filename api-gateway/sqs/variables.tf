@@ -11,3 +11,11 @@ variable "request_models" {
   type    = map
   default = null
 }
+
+variable "authorization" {
+  default = "NONE"
+}
+
+variable "authorizer_id" {
+  default = null
+}
