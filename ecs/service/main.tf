@@ -49,12 +49,12 @@ resource "aws_service_discovery_service" "service" {
     namespace_id = var.service_discovery_namespace_id
 
     dns_records {
-      ttl  = 10
+      ttl  = 1
       type = "A"
     }
 
     dns_records {
-      ttl  = 10
+      ttl  = 1
       type = "SRV"
     }
 
