@@ -100,8 +100,9 @@ module "metric" {
   for_each = { for x in local.metrics : x.name => x }
   source   = "../log-metric-alert"
 
-  name                        = "unauthroized-api-calls"
-  pattern                     = ""
+  name                        = x.name
+  metric_name                 = x.name
+  pattern                     = x.pattern
   log_group_name              = var.log_group_name
   metric_namespace            = var.metric_namespace
   notifications_sns_topic_arn = var.notifications_sns_topic_arn
