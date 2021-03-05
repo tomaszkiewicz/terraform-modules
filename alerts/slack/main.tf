@@ -1,7 +1,7 @@
 module "lambda" {
   source = "../../lambda"
 
-  name        = "slack-alarm-notification"
+  name        = "slack-alarm-notification${local.suffix}"
   source_file = "/tmp/terraform-artifacts/lambda-slack-alarm-notification.zip"
   runtime     = "go1.x"
   handler     = "main"
