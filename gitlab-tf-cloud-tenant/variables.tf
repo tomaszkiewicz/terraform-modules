@@ -1,5 +1,5 @@
 variable "tenant" {}
-variable "mail_domain" { default = "luktom.net" }
+variable "mail_domain" { default = "pragmaticcoders.com" }
 variable "group_name" { default = "" }
 variable "group_path" { default = "" }
 variable "envs" {
