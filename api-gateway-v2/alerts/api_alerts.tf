@@ -1,13 +1,19 @@
+variable "notifications_sns_topic_arn" { default = "" }
+variable "api_name" { default = "" }
+variable "threshold" {default = 10}
+variable "period" {default = 60}
+variable "evaluation_periods" {default = 1}
+
 resource "aws_cloudwatch_metric_alarm" "api-4xx" {
   alarm_name                = "api-gateway-4xx-response"
   alarm_description         = "This alarm monitors api 4xx response"
   comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = "1"
+  evaluation_periods        = var.evaluation_periods
   metric_name               = "4XXError"
   namespace                 = "AWS/ApiGateway"
-  period                    = "60"
+  period                    = var.period
   statistic                 = "Sum"
-  threshold                 = 10
+  threshold                 = var.threshold
   treat_missing_data        = "ignore"
   alarm_actions             = [var.notifications_sns_topic_arn]
   ok_actions                = [var.notifications_sns_topic_arn]
@@ -20,12 +26,12 @@ resource "aws_cloudwatch_metric_alarm" "api-5xx" {
   alarm_name                = "api-gateway-5xx-response"
   alarm_description         = "This alarm monitors api 5xx response"
   comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = "1"
+  evaluation_periods        = var.evaluation_periods
   metric_name               = "5XXError"
   namespace                 = "AWS/ApiGateway"
-  period                    = "60"
+  period                    = var.period
   statistic                 = "Sum"
-  threshold                 = 10
+  threshold                 = var.threshold
   treat_missing_data        = "ignore"
   alarm_actions             = [var.notifications_sns_topic_arn]
   ok_actions                = [var.notifications_sns_topic_arn]
@@ -34,9 +40,4 @@ resource "aws_cloudwatch_metric_alarm" "api-5xx" {
   }
 }
 
-variable "notifications_sns_topic_arn" {
-  default = ""
-}
-variable "api_name" {
-  default = ""
-}
+
