@@ -15,3 +15,4 @@ variable "mails" {
 }
 
 variable "create_user" { default = false }
+variable "configure_dmarc" { default = false }
