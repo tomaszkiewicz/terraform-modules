@@ -17,3 +17,7 @@ output "stage_name" {
 output "invoke_url" {
   value = aws_api_gateway_deployment.deployment.invoke_url
 }
+
+output "api_name" {
+  value = var.name
+}
