@@ -7,12 +7,12 @@ echo "Creating provisioner role for arn:${data.aws_partition.current.partition}:
 echo "==> Assuming role on master"
 
 ROLE_ARN="arn:${data.aws_partition.current.partition}:iam::$MASTER_ACCOUNT_ID:role/ci-provisioner"
-curl -s -o assume-role.sh https://gitlab.com/luktom/ci/-/raw/master/scripts/assume-role.sh && . assume-role.sh
+curl -s -o assume-role.sh https://raw.githubusercontent.com/pragmaticcoders/terraform-modules/master/scripts/assume-role.sh && . assume-role.sh
 
 echo "==> Assuming role on $SLAVE_ACCOUNT_NAME"
 
 ROLE_ARN="arn:${data.aws_partition.current.partition}:iam::$SLAVE_ACCOUNT_ID:role/OrganizationAccountAccessRole"
-curl -s -o assume-role.sh https://gitlab.com/luktom/ci/-/raw/master/scripts/assume-role.sh && . assume-role.sh
+curl -s -o assume-role.sh https://raw.githubusercontent.com/pragmaticcoders/terraform-modules/master/scripts/assume-role.sh && . assume-role.sh
 
 echo "==> Checking if provisioner role exists"
 
