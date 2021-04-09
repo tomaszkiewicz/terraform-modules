@@ -131,7 +131,7 @@ resource "aws_ecs_task_definition" "task" {
     ),
     {
       name : "healthcheck"
-      image : "luktom/ws"
+      image : "pragmaticcoders/ws"
       essential : true
       healthCheck : {
         command : [
