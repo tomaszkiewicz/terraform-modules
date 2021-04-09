@@ -33,7 +33,7 @@ resource "aws_ecs_service" "service" {
 }
 
 module "sg" {
-  source = "github.com/tomaszkiewicz/terraform-modules/sg"
+  source = "github.com/pragmaticcoders/terraform-modules/sg"
 
   name   = "ecs-service-${var.name}"
   vpc_id = var.vpc_id
