@@ -10,7 +10,7 @@ variable "cpu" { default = 256 }
 variable "memory" { default = 512 }
 variable "execution_role_arn" { default = "" }
 
-variable "container_image" { default = "luktom/ws" }
+variable "container_image" { default = "pragmaticcoders/ws" }
 variable "container_image_tag" { default = "latest" }
 
 variable "ssh_public_keys" {
