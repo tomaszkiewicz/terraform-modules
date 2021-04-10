@@ -25,7 +25,7 @@ resource "aws_budgets_budget" "monthly" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = var.alert_mails
-    subscriber_sns_topic_arns = [
+    subscriber_sns_topic_arns = var.notifications_sns_topic_arn == "" ? [] : [
       var.notifications_sns_topic_arn,
     ]
   }
@@ -36,7 +36,7 @@ resource "aws_budgets_budget" "monthly" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "FORECASTED"
     subscriber_email_addresses = var.alert_mails
-    subscriber_sns_topic_arns = [
+    subscriber_sns_topic_arns = var.notifications_sns_topic_arn == "" ? [] : [
       var.notifications_sns_topic_arn,
     ]
   }
