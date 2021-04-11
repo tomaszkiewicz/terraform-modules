@@ -13,11 +13,12 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(element(concat(data.aws_eks_cluster.cluster[*].certificate_authority.0.data, list("")), 0))
   token                  = element(concat(data.aws_eks_cluster_auth.cluster[*].token, list("")), 0)
   load_config_file       = false
+  version                = "~> 1.10"
 }
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "13.2.1"
+  version = "14.0.0"
 
   create_eks = var.create_eks
 
@@ -41,7 +42,7 @@ module "eks" {
 
   node_groups_defaults = {
     ami_type  = "AL2_x86_64"
-    disk_size = 50
+    disk_size = var.default_disk_size
   }
 
   workers_additional_policies = [
@@ -52,8 +53,8 @@ module "eks" {
   workers_group_defaults = {
     key_name               = var.key_name
     public_ip              = var.worker_public_ip
-    root_volume_size       = 50
-    instance_type          = "t2.medium"
+    root_volume_size       = var.default_disk_size
+    instance_type          = var.default_instance_type
     asg_recreate_on_change = true
     additional_userdata    = <<EOF
 #!/bin/bash

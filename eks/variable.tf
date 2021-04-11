@@ -1,5 +1,5 @@
 variable "cluster_name" {}
-variable "cluster_version" { default = "1.15" }
+variable "cluster_version" { default = "1.19" }
 variable "create_eks" { default = true }
 variable "tenant_name" {}
 variable "subnet_ids" {}
@@ -10,6 +10,9 @@ variable "worker_public_ip" { default = true }
 
 variable "override_ami_id" { default = "" }
 variable "override_ami_owner_id" { default = "" }
+
+variable "default_instance_type" { default = "t2.medium" }
+variable "default_disk_size" { default = 50 }
 
 variable "medium_asg_enabled" { default = true }
 variable "medium_asg_max_size" { default = 3 }
