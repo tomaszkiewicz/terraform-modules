@@ -36,4 +36,7 @@ variable "notifications_sns_topic_arn" { default = "" }
 
 variable "service_discovery_namespace_id" { default = "" }
 
-variable "cidr_block" { default = "" }
+variable "cidr_block" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}
