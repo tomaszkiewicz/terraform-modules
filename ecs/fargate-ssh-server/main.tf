@@ -66,7 +66,7 @@ module "sg" {
     var.service_port,
   ]
 
-  cidr_blocks = var.cidr_block
+  cidr_blocks = var.cidr_blocks
 
 }
 
