@@ -47,6 +47,6 @@ module "vpc" {
   enable_flow_log           = var.enable_flow_log
   flow_log_destination_type = var.flow_log_destination_type
   flow_log_destination_arn  = var.flow_log_destination_arn
-  flow_log_traffic_type = var.flow_log_traffic_type
+  flow_log_traffic_type     = var.flow_log_traffic_type
 
 }

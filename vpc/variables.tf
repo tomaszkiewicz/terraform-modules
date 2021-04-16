@@ -6,6 +6,6 @@ variable "enable_nat_gateway" { default = false }
 variable "enable_ipv6" { default = false }
 variable "max_azs" { default = 3 }
 variable "enable_flow_log" { default = false }
-variable "flow_log_destination_type" { default = "" } 
+variable "flow_log_destination_type" { default = "" }
 variable "flow_log_destination_arn" { default = "" }
 variable "flow_log_traffic_type" { default = "ALL" }
