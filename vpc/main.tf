@@ -43,4 +43,10 @@ module "vpc" {
   single_nat_gateway     = var.production_mode == false
   one_nat_gateway_per_az = true
   enable_dns_hostnames   = true
+
+  enable_flow_log           = var.enable_flow_log
+  flow_log_destination_type = var.flow_log_destination_type
+  flow_log_destination_arn  = var.flow_log_destination_arn
+  flow_log_traffic_type = var.flow_log_traffic_type
+
 }
