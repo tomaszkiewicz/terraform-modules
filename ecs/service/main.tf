@@ -1,9 +1,10 @@
 resource "aws_ecs_service" "service" {
-  name             = var.name
-  cluster          = var.cluster_id
-  task_definition  = aws_ecs_task_definition.task.arn
-  desired_count    = var.initial_desired_count
-  platform_version = "1.4.0"
+  name                   = var.name
+  cluster                = var.cluster_id
+  task_definition        = aws_ecs_task_definition.task.arn
+  desired_count          = var.initial_desired_count
+  platform_version       = "1.4.0"
+  enable_execute_command = true
 
   network_configuration {
     assign_public_ip = var.assign_public_ip
@@ -13,10 +14,22 @@ resource "aws_ecs_service" "service" {
     subnets = var.subnet_ids
   }
 
-  service_registries {
-    container_name = var.service_discovery_container_name
-    registry_arn   = aws_service_discovery_service.service.arn
-    container_port = var.service_port
+  dynamic "load_balancer" {
+    for_each = var.lb_listener_arn == "" ? [] : ["hack"]
+    content {
+      target_group_arn = join("", aws_lb_target_group.ecs.*.arn)
+      container_name   = var.service_discovery_container_name
+      container_port   = var.service_port
+    }
+  }
+
+  dynamic "service_registries" {
+    for_each = var.service_discovery_namespace_id == "" ? [] : ["hack"]
+    content {
+      container_name = var.service_discovery_container_name
+      registry_arn   = join("", aws_service_discovery_service.service.*.arn)
+      container_port = var.service_port
+    }
   }
 
   capacity_provider_strategy {
@@ -43,6 +56,8 @@ module "sg" {
 }
 
 resource "aws_service_discovery_service" "service" {
+  count = var.service_discovery_namespace_id != "" ? 1 : 0
+
   name = var.name
 
   dns_config {
@@ -88,7 +103,7 @@ resource "aws_ecs_task_definition" "task" {
     "FARGATE",
   ]
 
-  container_definitions = jsonencode([
+  container_definitions = jsonencode(flatten([
     merge(
       {
         name : var.service_discovery_container_name
@@ -129,7 +144,7 @@ resource "aws_ecs_task_definition" "task" {
         command : var.command
       },
     ),
-    {
+    var.health_check_path != "" && var.lb_listener_arn == "" ? [{
       name : "healthcheck"
       image : "luktom/ws"
       essential : true
@@ -146,6 +161,7 @@ resource "aws_ecs_task_definition" "task" {
       command : [
         "pause"
       ]
-    }
-  ])
+    }] : []
+    ])
+  )
 }

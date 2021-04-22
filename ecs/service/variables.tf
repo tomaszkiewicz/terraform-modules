@@ -4,7 +4,7 @@ variable "name" {}
 variable "vpc_id" {}
 variable "container_image" {}
 variable "container_image_tag" { default = "" }
-variable "service_discovery_namespace_id" {}
+variable "service_discovery_namespace_id" { default = "" }
 variable "service_discovery_container_name" { default = "app" }
 variable "cpu" { default = 256 }
 variable "memory" { default = 512 }
@@ -36,3 +36,14 @@ variable "command" {
   type    = list
   default = []
 }
+
+variable "dns_zone_id" { default = "" }
+variable "lb_listener_arn" { default = "" }
+variable "lb_certificate_arn" { default = "" }
+variable "lb_dns_name" { default = "" }
+variable "lb_zone_id" { default = "" }
+variable "lb_hosts" {
+  type    = list(string)
+  default = []
+}
+variable "lb_enable_www_redirect" { default = false }
