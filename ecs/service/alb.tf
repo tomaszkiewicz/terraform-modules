@@ -1,19 +1,21 @@
 resource "aws_lb_target_group" "ecs" {
   count = var.lb_listener_arn != "" ? 1 : 0
 
-  name        = "${var.cluster_id}-service-${var.name}"
-  port        = var.service_port
-  vpc_id      = var.vpc_id
-  protocol    = "HTTP"
-  target_type = "ip"
+  name                 = "${var.cluster_id}-service-${var.name}"
+  port                 = var.service_port
+  vpc_id               = var.vpc_id
+  protocol             = "HTTP"
+  target_type          = "ip"
+  deregistration_delay = 60
 
   dynamic "health_check" {
     for_each = var.health_check_path == "" ? [] : ["hack"]
     content {
-      matcher  = "200-399"
-      timeout  = 30
-      interval = 60
-      path     = var.health_check_path
+      matcher           = "200-399"
+      timeout           = 29
+      interval          = 30
+      healthy_threshold = 2
+      path              = var.health_check_path
     }
   }
 }
