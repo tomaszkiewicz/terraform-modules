@@ -31,6 +31,8 @@ resource "aws_apigatewayv2_route" "connect" {
   route_key      = "$connect"
   operation_name = "ConnectRoute"
   target         = "integrations/${aws_apigatewayv2_integration.connect.id}"
+  throttling_burst_limit   = var.throttling_burst_limit
+  throttling_rate_limit    = var.throttling_rate_limit
 }
 
 resource "aws_apigatewayv2_integration" "disconnect" {
@@ -48,6 +50,8 @@ resource "aws_apigatewayv2_route" "disconnect" {
   route_key      = "$disconnect"
   operation_name = "DisconnectRoute"
   target         = "integrations/${aws_apigatewayv2_integration.disconnect.id}"
+  throttling_burst_limit   = var.throttling_burst_limit
+  throttling_rate_limit    = var.throttling_rate_limit
 }
 
 resource "aws_apigatewayv2_stage" "main" {

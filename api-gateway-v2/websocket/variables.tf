@@ -6,3 +6,5 @@ variable "disconnect_lambda_invoke_arn" {}
 variable "domain_name" {}
 variable "dns_zone_id" {}
 variable "certificate_arn" {}
+variable "throttling_burst_limit" {}
+variable "throttling_rate_limit" {}
