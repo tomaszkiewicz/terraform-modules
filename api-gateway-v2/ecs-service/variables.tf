@@ -64,3 +64,7 @@ variable "cors_expose_headers" {
   type        = list(string)
   default     = []
 }
+
+variable "enable_access_log" { default = false }
+variable "access_log_format" { default = "{ \"requestId\":\"$context.requestId\", \"ip\": \"$context.identity.sourceIp\", \"httpMethod\":\"$context.httpMethod\",\"status\":\"$context.status\",\"path\": \"$context.path\" }" }
+variable "logs_retention_days" { default = 7 }
