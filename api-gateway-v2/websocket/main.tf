@@ -60,18 +60,17 @@ resource "aws_apigatewayv2_stage" "main" {
     throttling_rate_limit    = var.throttling_rate_limit
   }
 
-  route_settings = jsonencode([
-    {
-      route_key = aws_apigatewayv2_route.connect.route_key
-      throttling_burst_limit = var.throttling_burst_limit
-      throttling_rate_limit = var.throttling_rate_limit
-    },
-    {
-      route_key = aws_apigatewayv2_route.disconnect.route_key
-      throttling_burst_limit = var.throttling_burst_limit
-      throttling_rate_limit = var.throttling_rate_limit
-    }
-  ])
+  route_settings {
+    route_key = aws_apigatewayv2_route.connect.route_key
+    throttling_burst_limit   = var.throttling_burst_limit
+    throttling_rate_limit    = var.throttling_rate_limit
+  }
+
+  route_settings {
+    route_key = aws_apigatewayv2_route.connect.route_key
+    throttling_burst_limit   = var.throttling_burst_limit
+    throttling_rate_limit    = var.throttling_rate_limit
+  }
 
   lifecycle {
     ignore_changes = [
