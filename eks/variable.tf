@@ -99,10 +99,10 @@ variable "map_users" {
   }))
 
   default = [
-    {
-      userarn  = "arn:aws:iam::492614697882:user/luktom"
-      username = "luktom"
-      groups   = ["system:masters"]
-    },
+//    {
+//      userarn  = "arn:aws:iam::492614697882:user/luktom"
+//      username = "luktom"
+//      groups   = ["system:masters"]
+//    },
   ]
 }

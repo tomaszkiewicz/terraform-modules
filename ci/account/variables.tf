@@ -5,9 +5,7 @@ variable "deployer_additional_principals" {
 }
 variable "provisioner_additional_principals" {
   type = list
-  default = [
-    "arn:aws:iam::492614697882:root",
-  ]
+  default = []
 }
 variable "deployer_policy" {
   default = <<EOF

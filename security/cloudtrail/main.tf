@@ -51,7 +51,7 @@ resource "aws_cloudtrail" "organization" {
   # sns_topic_name                = "${data.terraform_remote_state.master.cloudtrail_events_sns_topic_arn}"
   enable_log_file_validation = true
   # kms_key_id                    = "${data.terraform_remote_state.master.kms_cloudtrail_arn["${var.account_name}"]}"
-  cloud_watch_logs_group_arn = aws_cloudwatch_log_group.cloudtrail.arn
+  cloud_watch_logs_group_arn = "${aws_cloudwatch_log_group.cloudtrail.arn}:*"
   cloud_watch_logs_role_arn  = module.role.iam_role_arn
 
   depends_on = [

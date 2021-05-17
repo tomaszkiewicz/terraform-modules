@@ -146,7 +146,7 @@ resource "aws_ecs_task_definition" "task" {
     ),
     var.health_check_path != "" && var.lb_listener_arn == "" ? [{
       name : "healthcheck"
-      image : "luktom/ws"
+      image : "pragmaticcoders/ws"
       essential : true
       healthCheck : {
         command : [

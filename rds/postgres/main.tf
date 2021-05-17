@@ -4,6 +4,8 @@ module "database" {
 
   identifier = var.name
   name       = var.name
+  parameter_group_name = var.name
+  parameter_group_use_name_prefix = false
 
   engine               = "postgres"
   engine_version       = "11"

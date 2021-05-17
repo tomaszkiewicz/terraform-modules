@@ -74,7 +74,7 @@ if [ ! -f /data/config.toml ]; then
     --template-config /data/template.toml \
     --config /data/config.toml \
     --executor docker+machine \
-    --docker-image luktom/ws \
+    --docker-image pragmaticcoders/ws \
     --tag-list "${join(",", var.gitlab_runner_tags)}" \
     --run-untagged=true \
     --locked=false
@@ -121,7 +121,7 @@ resource "aws_ecs_task_definition" "gitlab_runner_manager" {
   container_definitions = jsonencode([
     {
       name : "app",
-      image : "luktom/ws",
+      image : "pragmaticcoders/ws",
       essential : true,
       user : "root",
       entryPoint : [

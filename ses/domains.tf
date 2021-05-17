@@ -33,3 +33,11 @@ resource "aws_route53_record" "amazonses_verification_record" {
     aws_ses_domain_identity.domain[each.key].verification_token
   ]
 }
+
+module dmarc {
+  source      = "../ses-dmarc"
+  for_each    = var.configure_dmarc ? var.domains : {}
+  dns_zone_id = each.value
+  domain      = each.key
+}
+
