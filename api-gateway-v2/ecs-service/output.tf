@@ -6,6 +6,10 @@ output "api_id" {
   value = aws_apigatewayv2_api.main.id
 }
 
+output "name" {
+  value = aws_apigatewayv2_api.main.name
+}
+
 output "default_integration_id" {
   value = aws_apigatewayv2_integration.default.id
 }
