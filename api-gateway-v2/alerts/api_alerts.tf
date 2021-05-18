@@ -1,5 +1,6 @@
 variable "notifications_sns_topic_arn" { default = "" }
 variable "api_name" { default = "" }
+variable "api_id" { default = "" }
 variable "threshold" {default = 10}
 variable "period" {default = 60}
 variable "evaluation_periods" {default = 1}
@@ -18,9 +19,11 @@ resource "aws_cloudwatch_metric_alarm" "api-4xx" {
   treat_missing_data        = "ignore"
   alarm_actions             = [var.notifications_sns_topic_arn]
   ok_actions                = [var.notifications_sns_topic_arn]
-  dimensions = {
-    ApiName = var.api_name
-  }
+
+  dimensions = merge(
+    var.api_id != "" ? { ApiId = var.api_id } : {},
+    var.api_name != "" ? { ApiName = var.api_name } : {}
+  )
 }
 
 resource "aws_cloudwatch_metric_alarm" "api-5xx" {
@@ -36,9 +39,11 @@ resource "aws_cloudwatch_metric_alarm" "api-5xx" {
   treat_missing_data        = "ignore"
   alarm_actions             = [var.notifications_sns_topic_arn]
   ok_actions                = [var.notifications_sns_topic_arn]
-  dimensions = {
-    ApiName = var.api_name
-  }
+
+  dimensions = merge(
+    var.api_id != "" ? { ApiId = var.api_id } : {},
+    var.api_name != "" ? { ApiName = var.api_name } : {}
+  )
 }
 
 
