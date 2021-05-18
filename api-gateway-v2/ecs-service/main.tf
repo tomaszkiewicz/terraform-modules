@@ -44,10 +44,24 @@ resource "aws_apigatewayv2_stage" "main" {
   name        = "live"
   auto_deploy = true
 
+  dynamic "access_log_settings" {
+    for_each = var.enable_access_log ? ["access_log_enabled"] : []
+
+    content {
+      destination_arn = aws_cloudwatch_log_group.gw_access[0].arn
+      format = var.access_log_format
+    }
+  }
+
   lifecycle {
     ignore_changes = [
-      access_log_settings,
       deployment_id,
     ]
   }
+}
+
+resource "aws_cloudwatch_log_group" "gw_access" {
+  count             = var.enable_access_log ? 1 : 0
+  name              = "/api-gateway/${var.name}"
+  retention_in_days = var.logs_retention_days
 }
