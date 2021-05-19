@@ -11,7 +11,7 @@ resource "aws_cloudwatch_metric_alarm" "api-4xx" {
   alarm_description         = "This alarm monitors api 4xx response"
   comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = var.evaluation_periods
-  metric_name               = "4XXError"
+  metric_name               = var.api_id == "" ? "4XXError" : "4xx"
   namespace                 = "AWS/ApiGateway"
   period                    = var.period
   statistic                 = "Sum"
@@ -31,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "api-5xx" {
   alarm_description         = "This alarm monitors api 5xx response"
   comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = var.evaluation_periods
-  metric_name               = "5XXError"
+  metric_name               = var.api_id == "" ? "5XXError" : "5xx"
   namespace                 = "AWS/ApiGateway"
   period                    = var.period
   statistic                 = "Sum"
