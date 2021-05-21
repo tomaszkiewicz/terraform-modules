@@ -23,6 +23,7 @@ resource "aws_apigatewayv2_integration" "default" {
   integration_method = "ANY"
   connection_type    = "VPC_LINK"
   connection_id      = aws_apigatewayv2_vpc_link.service.id
+  request_parameters = var.integration_request_parameters
 
   lifecycle {
     ignore_changes = [
