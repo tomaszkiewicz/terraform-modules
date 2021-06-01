@@ -37,7 +37,8 @@ variable "deployer_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "lambda:UpdateFunctionCode"
+        "lambda:UpdateFunctionCode",
+        "lambda:PublishLayerVersion"
       ],
       "Resource": "*"
     }
