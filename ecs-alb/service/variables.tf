@@ -35,3 +35,4 @@ variable "command" {
   type    = list
   default = []
 }
+variable "alb_target_group" {}

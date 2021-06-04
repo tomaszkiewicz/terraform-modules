@@ -45,5 +45,3 @@ resource "aws_cloudwatch_metric_alarm" "api-5xx" {
     var.api_name != "" ? { ApiName = var.api_name } : {}
   )
 }
-
-

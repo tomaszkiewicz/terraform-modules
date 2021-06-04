@@ -14,8 +14,12 @@ module "iam_role_execution" {
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "*",
-      "Resource": "*"
+      "Action": [
+        "ssm:GetParameters"
+      ],
+      "Resource": [
+        "arn:aws:ssm:*:*:parameter/ecs/${var.cluster_name}/*"
+      ]
     }
   ]
 }

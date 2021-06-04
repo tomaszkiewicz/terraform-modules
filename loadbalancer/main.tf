@@ -1,9 +1,3 @@
-variable "alb_name" {}
-variable "alb_sg" {}
-variable "alb_subnets" {}
-variable "certificate_arn" {}
-variable "deregistration_delay" {default = 2}
-
 resource "aws_lb" "private_alb" {
   name               = var.alb_name
   internal           = true
@@ -15,7 +9,7 @@ resource "aws_lb" "private_alb" {
 }
 
 resource "aws_lb_target_group" "default" {
-  name = "target-group-${var.image_name}"
+  name = "target-group"
   port = var.service_port
   protocol = "HTTP"
   vpc_id = "${var.vpc_id}"
@@ -35,7 +29,6 @@ resource "aws_lb_listener" "http" {
   load_balancer_arn = "${aws_lb.private_alb.arn}"
   port = 80
   protocol = "HTTP"
-  //certificate_arn = var.certificate_arn
 
   default_action {
     type = "forward"
@@ -44,4 +37,8 @@ resource "aws_lb_listener" "http" {
 }
 output "alb_listener_arn" {
   value = aws_lb_listener.http.arn
+}
+
+output "alb_target_group" {
+  value = aws_lb_target_group.default.arn
 }
