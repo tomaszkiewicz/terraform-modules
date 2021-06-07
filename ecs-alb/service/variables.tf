@@ -1,5 +1,5 @@
 variable "cluster_id" {}
-variable "image_name" {}
+variable "image_name" {default = "app"}
 variable "subnet_ids" {}
 variable "name" {}
 variable "vpc_id" {}
