@@ -12,9 +12,9 @@ resource "aws_ecs_service" "service" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.default.arn  //balancer
+    target_group_arn = var.alb_target_group  //balancer
     container_name = var.image_name
-    container_port = "80"
+    container_port = var.service_port
   }
 
   capacity_provider_strategy {
