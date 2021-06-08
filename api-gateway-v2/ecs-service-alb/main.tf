@@ -25,6 +25,7 @@ resource "aws_apigatewayv2_integration" "default" {
   integration_method = "ANY"
   connection_type    = "VPC_LINK"
   connection_id      = aws_apigatewayv2_vpc_link.service.id
+  request_parameters = var.integration_request_parameters
 
   lifecycle {
     ignore_changes = [
@@ -52,4 +53,10 @@ resource "aws_apigatewayv2_stage" "main" {
       deployment_id,
     ]
   }
+}
+
+resource "aws_cloudwatch_log_group" "gw_access" {
+  count             = var.enable_access_log ? 1 : 0
+  name              = "/api-gateway/${var.name}"
+  retention_in_days = var.logs_retention_days
 }
