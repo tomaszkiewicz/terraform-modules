@@ -40,7 +40,7 @@ module "sg" {
   name   = "ecs-service-${var.image_name}"
   vpc_id = var.vpc_id
   ports = [
-    var.service_port,
+    var.service_port,var.health_check_port,
   ]
 }
 
@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "task" {
   network_mode       = "awsvpc"
   cpu                = var.cpu
   memory             = var.memory
-  task_role_arn      = var.execution_role_arn
+  task_role_arn      = var.task_role_arn
   execution_role_arn = var.execution_role_arn
   requires_compatibilities = [
     "FARGATE",

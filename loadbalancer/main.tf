@@ -17,6 +17,7 @@ resource "aws_lb_target_group" "default" {
   deregistration_delay = var.deregistration_delay
   health_check {
     healthy_threshold = var.healthy_threshold
+    port = var.health_check_port
     interval = var.helth_check_interval
     path = var.health_check_path
     timeout = var.health_check_timeout
