@@ -17,8 +17,6 @@ variable "max_ttl" { default = 3600 }
 variable "retain_on_delete" { default = false }
 
 variable "lambda_viewer_request" { default = "" }
-variable "bucket" {}
-variable "create_bucket" {default = true}
 
 locals {
   bucket_name = var.bucket_name == "" ? var.domain_name : var.bucket_name
