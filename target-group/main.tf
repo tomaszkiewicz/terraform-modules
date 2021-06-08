@@ -26,12 +26,7 @@ resource "aws_lb_listener_rule" "service-rule" {
   }
     condition {
     host_header {
-      values = [var.host_header]
+      values = ["${var.host_header}"]
     }
   }
-}
-
-
-output "alb_target_group" {
-  value = aws_lb_target_group.service-tg.arn
 }

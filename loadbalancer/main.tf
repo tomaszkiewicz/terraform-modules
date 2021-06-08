@@ -36,10 +36,3 @@ resource "aws_lb_listener" "http" {
     target_group_arn = "${aws_lb_target_group.default.arn}"
   }
 }
-output "alb_listener_arn" {
-  value = aws_lb_listener.http.arn
-}
-
-output "alb_target_group" {
-  value = aws_lb_target_group.default.arn
-}
