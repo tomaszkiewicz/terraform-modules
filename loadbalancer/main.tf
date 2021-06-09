@@ -32,7 +32,12 @@ resource "aws_lb_listener" "http" {
   protocol = var.protocol
 
   default_action {
-    type = var.listener_action
-    target_group_arn = "${aws_lb_target_group.default.arn}"
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "You shall not pass"
+      status_code  = "503"
+    }
   }
 }

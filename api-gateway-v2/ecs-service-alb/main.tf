@@ -37,7 +37,7 @@ resource "aws_apigatewayv2_integration" "default" {
 resource "aws_apigatewayv2_route" "default" {
   count          = var.create_default_route ? 1 : 0
   api_id         = aws_apigatewayv2_api.main.id
-  route_key      = "ANY /"
+  route_key      = "$default"
   operation_name = "DefaultRoute"
   target         = "integrations/${aws_apigatewayv2_integration.default.id}"
 }

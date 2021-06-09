@@ -26,7 +26,7 @@ resource "aws_lb_listener_rule" "service-rule" {
   }
     condition {
     host_header {
-      values = ["${var.host_header}"]
+      values = var.host_header
     }
   }
 }
