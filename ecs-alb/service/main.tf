@@ -37,7 +37,7 @@ resource "aws_ecs_service" "service" {
 module "sg" {
   source = "github.com/pragmaticcoders/terraform-modules/sg"
 
-  name   = "ecs-service-${var.image_name}"
+  name   = "ecs-service-${var.name}"
   vpc_id = var.vpc_id
   ports = [
     var.service_port,var.health_check_port,
