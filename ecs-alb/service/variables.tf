@@ -36,3 +36,5 @@ variable "command" {
   default = []
 }
 variable "alb_target_group" {default = ""}
+
+variable "sidecar_definition" {default = {}}
