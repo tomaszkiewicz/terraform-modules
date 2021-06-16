@@ -98,5 +98,6 @@ resource "aws_ecs_task_definition" "task" {
         command : var.command
       },
     ),
+    var.sidecar_definition
   ])
 }
