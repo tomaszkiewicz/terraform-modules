@@ -1,5 +1,5 @@
 resource "aws_lb_target_group" "ecs" {
-  count = var.lb_listener_arn != "" ? 1 : 0
+  count = var.lb_listener_arn != "" || var.lb_force_create_target_group ? 1 : 0
 
   name                 = "${var.cluster_id}-${var.name}"
   port                 = var.service_port

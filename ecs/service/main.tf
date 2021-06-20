@@ -15,7 +15,7 @@ resource "aws_ecs_service" "service" {
   }
 
   dynamic "load_balancer" {
-    for_each = var.lb_listener_arn == "" ? [] : ["hack"]
+    for_each = var.lb_listener_arn == "" || var.lb_force_create_target_group ? [] : ["hack"]
     content {
       target_group_arn = join("", aws_lb_target_group.ecs.*.arn)
       container_name   = var.service_discovery_container_name

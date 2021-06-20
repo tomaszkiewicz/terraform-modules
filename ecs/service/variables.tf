@@ -47,3 +47,4 @@ variable "lb_hosts" {
   default = []
 }
 variable "lb_enable_www_redirect" { default = false }
+variable "lb_force_create_target_group" { default = false }
