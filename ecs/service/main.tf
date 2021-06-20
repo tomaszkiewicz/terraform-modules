@@ -144,7 +144,7 @@ resource "aws_ecs_task_definition" "task" {
         command : var.command
       },
     ),
-    var.health_check_path != "" && var.lb_listener_arn == "" ? [{
+    var.health_check_path != "" && (var.lb_listener_arn == "" && ! var.lb_force_create_target_group) ? [{
       name : "healthcheck"
       image : "luktom/ws"
       essential : true
