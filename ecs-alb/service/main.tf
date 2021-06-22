@@ -56,7 +56,7 @@ resource "aws_ecs_task_definition" "task" {
     "FARGATE",
   ]
 
-  container_definitions = jsonencode([
+  container_definitions = jsonencode(concat([
     merge(
       {
         name : var.image_name
@@ -97,6 +97,6 @@ resource "aws_ecs_task_definition" "task" {
       length(var.command) == 0 ? {} : {
         command : var.command
       },
-    ),
-  ])
+    )
+  ], var.sidecar_definitions))
 }
