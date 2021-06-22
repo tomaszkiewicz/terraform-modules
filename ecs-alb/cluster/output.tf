@@ -25,3 +25,7 @@ output "execution_role_arn" {
 output "vpc_id" {
   value = var.vpc_id
 }
+
+output "namespace_id" {
+  value = join("", aws_service_discovery_public_dns_namespace.ecs.*.id, aws_service_discovery_private_dns_namespace.ecs.*.id)
+}
