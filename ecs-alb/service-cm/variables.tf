@@ -38,3 +38,4 @@ variable "command" {
 }
 
 variable "efs_id" {default = ""}
+variable "sidecar_definitions" {default = []}

@@ -70,12 +70,12 @@ resource "aws_service_discovery_service" "service" {
   # }
 }
 
-//data "aws_ecs_container_definition" "existing" {
-//  count = var.container_image_tag == "" ? 1 : 0
-//
-//  task_definition = var.name
-//  container_name  = var.service_discovery_container_name
-//}
+data "aws_ecs_container_definition" "existing" {
+  count = var.container_image_tag == "" ? 1 : 0
+
+  task_definition = var.name
+  container_name  = var.service_discovery_container_name
+}
 
 resource "aws_ecs_task_definition" "task" {
   family             = var.name
@@ -97,11 +97,11 @@ resource "aws_ecs_task_definition" "task" {
       }
     }
   }
-  container_definitions = jsonencode([
+  container_definitions = jsonencode(concat([
     merge(
       {
         name : var.service_discovery_container_name
-        image : var.container_image
+        image : "${var.container_image}:${var.container_image_tag == "" ? data.aws_ecs_container_definition.existing[0].image_digest : var.container_image_tag}"
         essential : true
         portMappings : [
           {
@@ -138,5 +138,6 @@ resource "aws_ecs_task_definition" "task" {
         command : var.command
       },
     ),
-  ])
+  ], var.sidecar_definitions))
+
 }

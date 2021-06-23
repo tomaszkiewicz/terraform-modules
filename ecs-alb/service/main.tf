@@ -30,7 +30,12 @@ resource "aws_ecs_service" "service" {
   # }
 
 }
+data "aws_ecs_container_definition" "existing" {
+  count = var.container_image_tag == "" ? 1 : 0
 
+  task_definition = var.name
+  container_name  = var.image_name
+}
 
 
 
@@ -55,12 +60,22 @@ resource "aws_ecs_task_definition" "task" {
   requires_compatibilities = [
     "FARGATE",
   ]
+  dynamic "volume" {
+    for_each = var.efs_id == "" ? [] :[var.efs_id]
+    content{
+    name = "service-storage"
+    efs_volume_configuration {
+      root_directory = "/"
+      file_system_id = var.efs_id
+      }
+    }
+  }
 
   container_definitions = jsonencode(concat([
     merge(
       {
         name : var.image_name
-        image : var.container_image
+        image : "${var.container_image}:${var.container_image_tag == "" ? data.aws_ecs_container_definition.existing[0].image_digest : var.container_image_tag}"
         essential : true
         stopTimeout: 10
         portMappings : [
