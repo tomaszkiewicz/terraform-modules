@@ -38,3 +38,4 @@ variable "command" {
 variable "alb_target_group" {default = ""}
 variable "efs_id" {default = ""}
 variable "sidecar_definitions" {default = []}
+variable "nfs" {default = 2049}

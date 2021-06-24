@@ -45,7 +45,7 @@ module "sg" {
   name   = "ecs-service-${var.image_name}"
   vpc_id = var.vpc_id
   ports = [
-    var.service_port,var.health_check_port,
+    var.service_port,var.health_check_port,var.nfs
   ]
 }
 
