@@ -16,3 +16,5 @@ variable "listener_port" {default = 80}
 variable "protocol" {default = "HTTP"}
 variable "listener_action" {default = "forward"}
 variable "target_group_protocol" {default = "HTTP"}
+variable "certificate" {default = ""}
+variable "create_https_listener" {default = false}

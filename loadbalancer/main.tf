@@ -41,3 +41,23 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
+
+resource "aws_lb_listener" "https" {
+  count = var.create_https_listener ? 1 : 0
+
+  load_balancer_arn = "${aws_lb.app_loadbalancer.arn}"
+  port = 443
+  protocol = "HTTPS"
+  certificate_arn = var.certificate
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "You shall not pass"
+      status_code  = "503"
+    }
+  }
+}
