@@ -9,6 +9,7 @@ variable "days_to_transition" { default = 14 }
 variable "transition_storage_class" { default = "GLACIER" }
 variable "enable_expiration" { default = false }
 variable "days_to_expiration" { default = 90 }
+variable "sse_algorithm" { default = "aws:kms" }
 
 variable "cors_enabled" { default = false }
 variable "cors_allowed_headers" {
