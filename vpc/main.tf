@@ -26,6 +26,7 @@ module "vpc" {
 
   private_subnet_tags = var.eks_cluster_name == "" ? {} : {
     "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"               = "1"
   }
 
   create_database_subnet_route_table     = true
