@@ -8,9 +8,10 @@ variable "alert_mails" {
 variable "notifications_sns_topic_arn" { default = "" }
 variable "actual_threshold_percent" { default = 100 }
 variable "forecast_threshold_percent" { default = 110 }
+variable "name" { default = "monthly-budget" }
 
 resource "aws_budgets_budget" "monthly" {
-  name         = "monthly-budget"
+  name         = var.name
   budget_type  = "COST"
   limit_amount = var.monthly_budget + 0.01 // required as tf detects change when integer number used
   limit_unit   = "USD"
