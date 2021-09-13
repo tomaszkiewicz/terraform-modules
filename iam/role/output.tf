@@ -7,9 +7,9 @@ output "arn" {
 }
 
 output "iam_role_name" {
-  value = var.name
+  value = aws_iam_role.role.name
 }
 
 output "name" {
-  value = var.name
+  value = aws_iam_role.role.name
 }

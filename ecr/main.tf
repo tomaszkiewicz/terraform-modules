@@ -1,6 +1,6 @@
 locals {
   repos = compact(concat(
-    list(var.name),
+    tolist(var.name),
     var.names,
   ))
 }
