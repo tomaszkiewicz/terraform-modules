@@ -48,6 +48,6 @@ variable "zone_id" {
 
 variable "tags" {
   description = "A mapping of tags to assign to the resource"
-  type        = tomap(string)
+  type        = map(string)
   default     = {}
 }
