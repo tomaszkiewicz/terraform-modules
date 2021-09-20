@@ -12,7 +12,7 @@ resource "aws_lb_target_group" "default" {
   name = "${var.alb_name}-target-group"
   port = var.service_port
   protocol = var.target_group_protocol
-  vpc_id = "${var.vpc_id}"
+  vpc_id = var.vpc_id
   target_type = "ip"
   deregistration_delay = var.deregistration_delay
   health_check {
@@ -28,7 +28,7 @@ resource "aws_lb_target_group" "default" {
 
 resource "aws_lb_listener" "http" {
   count = var.create_http_listener ? 1 : 0
-  load_balancer_arn = "${aws_lb.app_loadbalancer.arn}"
+  load_balancer_arn = aws_lb.app_loadbalancer.arn
   port = var.listener_port
   protocol = var.protocol
 
@@ -46,7 +46,7 @@ resource "aws_lb_listener" "http" {
 resource "aws_lb_listener" "https" {
   count = var.create_https_listener ? 1 : 0
 
-  load_balancer_arn = "${aws_lb.app_loadbalancer.arn}"
+  load_balancer_arn = aws_lb.app_loadbalancer.arn
   port = 443
   protocol = "HTTPS"
   certificate_arn = var.certificate
