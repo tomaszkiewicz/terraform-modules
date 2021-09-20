@@ -1,10 +1,9 @@
 output "alb_listener_http_arn" {
-  value = aws_lb_listener.http.arn
+  value = var.create_http_listener ? aws_lb_listener.http[0].arn : null
 }
 output "alb_listener_https_arn" {
-  value = aws_lb_listener.https[0].arn
+  value = var.create_https_listener ? aws_lb_listener.https[0].arn : null
 }
-
 output "alb_target_group" {
   value = aws_lb_target_group.default.arn
 }
