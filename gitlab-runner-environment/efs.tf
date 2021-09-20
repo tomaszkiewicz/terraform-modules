@@ -1,5 +1,5 @@
 module "efs" {
-  source = "github.com/tomaszkiewicz/terraform-modules/efs"
+  source = "github.com/pragmaticcoders/terraform-modules/efs"
 
   subnet_ids = module.vpc.public_subnet_ids
   security_group_ids = [
@@ -9,7 +9,7 @@ module "efs" {
 }
 
 module "efs_sg" {
-  source = "github.com/tomaszkiewicz/terraform-modules/sg"
+  source = "github.com/pragmaticcoders/terraform-modules/sg"
 
   name   = "efs"
   vpc_id = module.vpc.id
