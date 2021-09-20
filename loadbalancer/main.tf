@@ -27,6 +27,7 @@ resource "aws_lb_target_group" "default" {
 }
 
 resource "aws_lb_listener" "http" {
+  count = var.create_http_listener ? 1 : 0
   load_balancer_arn = "${aws_lb.app_loadbalancer.arn}"
   port = var.listener_port
   protocol = var.protocol

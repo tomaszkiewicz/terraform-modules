@@ -17,4 +17,11 @@ variable "protocol" {default = "HTTP"}
 variable "listener_action" {default = "forward"}
 variable "target_group_protocol" {default = "HTTP"}
 variable "certificate" {default = ""}
-variable "create_https_listener" {default = false}
+variable "create_https_listener" {
+  description = "Running the listener for the HTTPS port"
+  default     = false
+}
+variable "create_http_listener" {
+  description = "Running the listener for the HTTP port"
+  default     = false
+}
