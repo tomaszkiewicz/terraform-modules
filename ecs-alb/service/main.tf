@@ -3,6 +3,7 @@ resource "aws_ecs_service" "service" {
   cluster = var.cluster_id
   task_definition = aws_ecs_task_definition.task.arn
   desired_count = var.initial_desired_count
+  enable_execute_command = var.enable_execute_command
   platform_version = "1.4.0"
 
   network_configuration {
@@ -61,12 +62,12 @@ resource "aws_ecs_task_definition" "task" {
     "FARGATE",
   ]
   dynamic "volume" {
-    for_each = var.efs_id == "" ? [] :[var.efs_id]
-    content{
-    name = "service-storage"
-    efs_volume_configuration {
-      root_directory = "/"
-      file_system_id = var.efs_id
+    for_each = var.efs_mount == "" ? {} : { for k, v in var.efs_mount : k => v }
+    content {
+      name = volume.key
+      efs_volume_configuration {
+        root_directory = volume.value["root_directory"]
+        file_system_id = volume.value["file_system_id"]
       }
     }
   }
