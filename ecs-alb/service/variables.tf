@@ -39,3 +39,8 @@ variable "alb_target_group" {default = ""}
 variable "efs_id" {default = ""}
 variable "sidecar_definitions" {default = []}
 variable "nfs" {default = 2049}
+variable "enable_execute_command" { default = false }
+variable "efs_mount" {
+  default = {}
+  description = "The EFS volumes mount to container directory"
+}
