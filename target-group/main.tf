@@ -12,7 +12,7 @@ resource "aws_lb_target_group" "service-tg" {
     path = var.health_check_path
     timeout = var.health_check_timeout
     unhealthy_threshold = var.unhealthy_threshold
-    matcher = "200-399"
+    matcher = var.health_check_matcher
   }
 }
 

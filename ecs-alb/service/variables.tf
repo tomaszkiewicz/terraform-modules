@@ -44,3 +44,7 @@ variable "efs_mount" {
   default = {}
   description = "The EFS volumes mount to container directory"
 }
+variable "mount_points" {
+  default     = {}
+  description = "Definition of mounting points in a container"
+}

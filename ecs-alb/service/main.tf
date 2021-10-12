@@ -66,8 +66,14 @@ resource "aws_ecs_task_definition" "task" {
     content {
       name = volume.key
       efs_volume_configuration {
-        root_directory = volume.value["root_directory"]
-        file_system_id = volume.value["file_system_id"]
+        root_directory          = volume.value["root_directory"]
+        file_system_id          = volume.value["file_system_id"]
+        transit_encryption      = "ENABLED"
+        transit_encryption_port = 2999
+        authorization_config {
+          access_point_id = volume.value["access_point_id"]
+          iam             = "ENABLED"
+        }
       }
     }
   }
@@ -97,6 +103,13 @@ resource "aws_ecs_task_definition" "task" {
             name : k
             valueFrom : v
           }
+        ]
+        mountPoints : [
+          for k, v in var.mount_points : {
+            sourceVolume : v["sourceVolume"]
+            containerPath : v["containerPath"]
+            readOnly : v["readOnly"]
+        }
         ]
         logConfiguration : {
           logDriver : "awslogs"
