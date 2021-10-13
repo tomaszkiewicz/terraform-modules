@@ -14,3 +14,4 @@ variable "listener" {default = ""}
 variable "priority" {default = 50}
 variable "host_header" {default = ""}
 variable "service-name" {default = "app"}
+variable "health_check_matcher" {default = "200-399"}
