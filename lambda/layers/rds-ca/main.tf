@@ -1,6 +1,6 @@
 resource "aws_lambda_layer_version" "rds_ca" {
   filename   = "/tmp/terraform-artifacts/lambda-layer-rds-ca.zip"
-  layer_name = "rds-ca"
+  layer_name = var.layer_name
 
   compatible_runtimes = [
     "nodejs10.x",
