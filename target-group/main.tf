@@ -14,6 +14,9 @@ resource "aws_lb_target_group" "service-tg" {
     unhealthy_threshold = var.unhealthy_threshold
     matcher = var.health_check_matcher
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_lb_listener_rule" "service-rule" {
