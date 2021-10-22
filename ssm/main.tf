@@ -8,7 +8,7 @@ resource "aws_ssm_parameter" "ssm_parameter" {
   key_id      = var.key_id
   lifecycle {
     ignore_changes = [
-      "value",
+      value,
     ]
   }
 }
