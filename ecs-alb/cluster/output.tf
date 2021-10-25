@@ -29,3 +29,11 @@ output "vpc_id" {
 output "namespace_id" {
   value = join("", aws_service_discovery_public_dns_namespace.ecs.*.id, aws_service_discovery_private_dns_namespace.ecs.*.id)
 }
+
+output "aws_iam_policy_document_main" {
+  value = data.aws_iam_policy_document.main
+}
+
+output "iam_role_name" {
+  value = module.iam_role_execution.iam_role_name
+}
