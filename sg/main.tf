@@ -6,5 +6,9 @@ resource "aws_security_group" "main" {
   tags = {
     Name = var.name
   }
+  
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
