@@ -1,7 +1,7 @@
 resource "aws_cloudwatch_metric_alarm" "lambda_concurrent_executions" {
   count = var.notifications_sns_topic_arn != "" ? 1 : 0
 
-  alarm_name                = "lambda-concurrent-executions"
+  alarm_name                = var.product_prefix != "" ? "${var.product_prefix}-lambda-concurrent-executions" : "lambda-concurrent-executions"
   alarm_description         = "This alarm monitors concurrent executions sum across all lambdas"
   comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "1"
@@ -19,7 +19,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_concurrent_executions" {
 resource "aws_cloudwatch_metric_alarm" "lambda_invocations" {
   count = var.notifications_sns_topic_arn != "" ? 1 : 0
 
-  alarm_name                = "lambda-invocations"
+  alarm_name                = var.product_prefix != "" ? "${var.product_prefix}-lambda-invocations" : "lambda-invocations"
   alarm_description         = "This alarm monitors invocations sum across all lambdas"
   comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "1"
@@ -37,7 +37,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_invocations" {
 resource "aws_cloudwatch_metric_alarm" "lambda_throttles" {
   count = var.notifications_sns_topic_arn != "" ? 1 : 0
 
-  alarm_name                = "lambda-throttles"
+  alarm_name                = var.product_prefix != "" ? "${var.product_prefix}-lambda-throttles" : "lambda-throttles"
   alarm_description         = "This alarm monitors throttles sum across all lambdas"
   comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "1"
