@@ -1,8 +1,8 @@
 module "lambda" {
   source = "../../lambda"
 
-  name        = "slack-alarm-notification"
-  source_dir  = var.source_dir
+  name        = var.name
+  source_file  = var.source_file
   runtime     = "python3.8"
   handler     = "sns_slack.lambda_handler"
   memory_size = 128
