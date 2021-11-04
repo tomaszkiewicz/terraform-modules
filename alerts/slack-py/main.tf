@@ -2,15 +2,15 @@ module "lambda" {
   source = "../../lambda"
 
   name        = var.name
-  source_file  = var.source_file
-  runtime     = "python3.8"
+  source_file = var.source_file
+  runtime     = "python3.6"
   handler     = "sns_slack.lambda_handler"
   memory_size = 128
   timeout     = 30
 
   environment = {
     "SLACK_URL"     = var.slack_url
-    "SLACK_CHANNEL" = var.slack_channel
+    "SLACK_EMOJI"   = ":aws:"
     "SLACK_USER"    = var.slack_user
   }
 
