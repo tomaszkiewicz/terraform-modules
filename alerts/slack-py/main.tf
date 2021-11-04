@@ -10,7 +10,7 @@ module "lambda" {
 
   environment = {
     "SLACK_URL"     = var.slack_url
-    "SLACK_EMOJI"   = ":aws:"
+    "SLACK_EMOJI"   = ":warning:"
     "SLACK_USER"    = var.slack_user
   }
 
