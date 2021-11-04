@@ -1,5 +1,5 @@
 output "function_name" {
-  value = "slack-alarm-notification"
+  value = module.lambda.name
 }
 
 output "function_arn" {
