@@ -3,7 +3,7 @@ module "lambda" {
 
   name        = var.name
   source_file = var.source_file
-  runtime     = "python3.6"
+  runtime     = "python3.8"
   handler     = "sns_slack.lambda_handler"
   memory_size = 128
   timeout     = 30
