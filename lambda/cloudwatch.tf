@@ -32,7 +32,7 @@ resource "aws_cloudwatch_metric_alarm" "lambda_memory_utilization" {
   period                    = "300"
   statistic                 = "Maximum"
   threshold                 = var.lambda_insights_memory_utilization_threshold
-  treat_missing_data        = "missing"
+  treat_missing_data        = "notBreaching"
   alarm_actions             = [var.notifications_sns_topic_arn]
   ok_actions                = [var.notifications_sns_topic_arn]
 
