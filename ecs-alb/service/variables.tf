@@ -48,3 +48,11 @@ variable "mount_points" {
   default     = {}
   description = "Definition of mounting points in a container"
 }
+variable "load_balancer" {
+  default     = {}
+  description = "Definition of load balancer for other containers started within one ECS task"
+}
+variable "sg_ports" {
+  default = []
+  description = "List for Security Group ports"
+}

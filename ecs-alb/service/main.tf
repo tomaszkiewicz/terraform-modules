@@ -18,6 +18,15 @@ resource "aws_ecs_service" "service" {
     container_port = var.service_port
   }
 
+  dynamic "load_balancer" {
+    for_each = var.load_balancer == "" ? {} : { for k, v in var.load_balancer : k => v }
+    content {
+      target_group_arn = load_balancer.value["target_group_arn"]
+      container_name   = load_balancer.key
+      container_port   = load_balancer.value["container_port"]
+    }
+  }
+
   capacity_provider_strategy {
     base = 0
     capacity_provider = "FARGATE_SPOT"
@@ -45,9 +54,7 @@ module "sg" {
 
   name   = "ecs-service-${var.image_name}"
   vpc_id = var.vpc_id
-  ports = [
-    var.service_port,var.health_check_port,var.nfs
-  ]
+  ports  = local.sg_ports
 }
 
 
@@ -69,7 +76,7 @@ resource "aws_ecs_task_definition" "task" {
         root_directory          = volume.value["root_directory"]
         file_system_id          = volume.value["file_system_id"]
         transit_encryption      = "ENABLED"
-        transit_encryption_port = 2999
+        transit_encryption_port = volume.value["transit_encryption_port"] == "" ? 2999 : volume.value["transit_encryption_port"]
         authorization_config {
           access_point_id = volume.value["access_point_id"]
           iam             = "ENABLED"
