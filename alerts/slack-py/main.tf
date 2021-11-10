@@ -2,7 +2,7 @@ module "lambda" {
   source = "../../lambda"
 
   name        = var.name
-  source_file = var.source_file
+  source_dir  = var.source_dir
   runtime     = "python3.8"
   handler     = "sns_slack.lambda_handler"
   memory_size = 128
