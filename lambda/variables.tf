@@ -1,4 +1,5 @@
 variable "name" {}
+variable "lambda_layer_name" { default = "lambda_layer_rds_ca" }
 variable "runtime" { default = "nodejs12.x" }
 variable "handler" { default = "index.handler" }
 variable "source_dir" { default = "" }
