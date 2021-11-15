@@ -20,6 +20,7 @@ variable "schedule_expression" { default = "" }
 variable "notifications_sns_topic_arn" { default = "" }
 
 variable "enable_lambda_insights" { default = false }
+variable "enable_lambda_layers_rds_ca" { default = true }
 variable "lambda_insights_version" { default = 14 }
 variable "lambda_insights_memory_utilization_threshold" { default = 90 }
 
