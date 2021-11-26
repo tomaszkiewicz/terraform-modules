@@ -38,3 +38,8 @@ resource "aws_iam_role_policy_attachment" "attachment" {
   role       = aws_iam_role.role.name
   policy_arn = each.value
 }
+
+resource "aws_iam_role_policy_attachment" "lambda_vpc_execution_role" {
+  role       = aws_iam_role.role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
