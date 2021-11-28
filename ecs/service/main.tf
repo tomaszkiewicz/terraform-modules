@@ -6,12 +6,15 @@ resource "aws_ecs_service" "service" {
   platform_version       = "1.4.0"
   enable_execute_command = true
 
-  network_configuration {
-    assign_public_ip = var.assign_public_ip
-    security_groups = [
-      module.sg.id,
-    ]
-    subnets = var.subnet_ids
+  dynamic "network_configuration" {
+    for_each = var.enable_fargate ? ["hack"] : []
+    content {
+      assign_public_ip = var.assign_public_ip
+      security_groups = [
+        module.sg[0].id,
+      ]
+      subnets = var.subnet_ids
+    }
   }
 
   dynamic "load_balancer" {
@@ -47,6 +50,7 @@ resource "aws_ecs_service" "service" {
 
 module "sg" {
   source = "github.com/tomaszkiewicz/terraform-modules/sg"
+  count  = var.enable_fargate ? 1 : 0
 
   name   = "ecs-service-${var.name}"
   vpc_id = var.vpc_id
@@ -94,14 +98,14 @@ data "aws_ecs_container_definition" "existing" {
 
 resource "aws_ecs_task_definition" "task" {
   family             = var.name
-  network_mode       = "awsvpc"
+  network_mode       = var.enable_fargate ? "awsvpc" : null
   cpu                = var.cpu
   memory             = var.memory
   task_role_arn      = var.task_role_arn
   execution_role_arn = var.execution_role_arn
-  requires_compatibilities = [
+  requires_compatibilities = var.enable_fargate ? [
     "FARGATE",
-  ]
+  ] : []
 
   container_definitions = jsonencode(flatten([
     merge(
@@ -128,6 +132,8 @@ resource "aws_ecs_task_definition" "task" {
             valueFrom : v
           }
         ]
+      },
+      !var.enable_fargate  ? {} : {
         logConfiguration : {
           logDriver : "awslogs"
           options : {
@@ -136,7 +142,7 @@ resource "aws_ecs_task_definition" "task" {
             awslogs-stream-prefix : var.service_discovery_container_name
           }
         },
-      },
+      }
       length(var.entryPoint) == 0 ? {} : {
         entryPoint : var.entryPoint
       },

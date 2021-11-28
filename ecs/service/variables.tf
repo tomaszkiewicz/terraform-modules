@@ -1,7 +1,14 @@
 variable "cluster_id" {}
-variable "subnet_ids" {}
+variable "subnet_ids" {
+  type = list
+  default = [] // WARNING This variable is required for Fargate capacity provider (enable_fargate = tru)
+}
 variable "name" {}
 variable "vpc_id" {}
+variable "enable_fargate" {
+  type = bool
+  default = true
+}
 variable "container_image" {}
 variable "container_image_tag" { default = "" }
 variable "service_discovery_namespace_id" { default = "" }
