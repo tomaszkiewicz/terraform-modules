@@ -142,7 +142,7 @@ resource "aws_ecs_task_definition" "task" {
             awslogs-stream-prefix : var.service_discovery_container_name
           }
         },
-      }
+      },
       length(var.entryPoint) == 0 ? {} : {
         entryPoint : var.entryPoint
       },
