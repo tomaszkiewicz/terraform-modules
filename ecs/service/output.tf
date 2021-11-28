@@ -1,5 +1,5 @@
 output "security_group_id" {
-  value = module.sg.id
+  value = module.sg[0].id
 }
 
 output "cloudmap_service_arn" {
