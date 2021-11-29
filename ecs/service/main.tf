@@ -35,10 +35,13 @@ resource "aws_ecs_service" "service" {
     }
   }
 
-  capacity_provider_strategy {
-    base              = 0
-    capacity_provider = "FARGATE_SPOT"
-    weight            = 1
+  dynamic "capacity_provider_strategy" {
+    for_each = var.enable_fargate ? ["hack"] : []
+    content {
+      base              = 0
+      capacity_provider = "FARGATE_SPOT"
+      weight            = 1
+    }
   }
 
   # lifecycle {
@@ -133,7 +136,7 @@ resource "aws_ecs_task_definition" "task" {
           }
         ]
       },
-      !var.enable_fargate  ? {} : {
+      ! var.enable_fargate ? {} : {
         logConfiguration : {
           logDriver : "awslogs"
           options : {
