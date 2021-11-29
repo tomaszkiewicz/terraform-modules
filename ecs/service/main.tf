@@ -5,6 +5,7 @@ resource "aws_ecs_service" "service" {
   desired_count          = var.initial_desired_count
   platform_version       = "1.4.0"
   enable_execute_command = true
+  launch_type            = var.enable_fargate ? "FARGATE" : "EC2"
 
   dynamic "network_configuration" {
     for_each = var.enable_fargate ? ["hack"] : []
