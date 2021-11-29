@@ -3,7 +3,7 @@ resource "aws_ecs_service" "service" {
   cluster                = var.cluster_id
   task_definition        = aws_ecs_task_definition.task.arn
   desired_count          = var.initial_desired_count
-  platform_version       = var.enable_fargate ? "1.4.0" : nul
+  platform_version       = var.enable_fargate ? "1.4.0" : null
   enable_execute_command = true
   launch_type            = var.enable_fargate ? "FARGATE" : "EC2"
 
