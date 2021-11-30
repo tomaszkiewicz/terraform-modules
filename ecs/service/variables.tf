@@ -1,12 +1,12 @@
 variable "cluster_id" {}
 variable "subnet_ids" {
-  type = list
+  type    = list
   default = [] // WARNING This variable is required for Fargate capacity provider (enable_fargate = tru)
 }
 variable "name" {}
 variable "vpc_id" {}
 variable "enable_fargate" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "container_image" {}

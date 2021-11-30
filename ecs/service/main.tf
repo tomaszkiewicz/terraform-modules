@@ -117,13 +117,13 @@ resource "aws_ecs_task_definition" "task" {
         name : var.service_discovery_container_name
         image : "${var.container_image}:${var.container_image_tag == "" ? data.aws_ecs_container_definition.existing[0].image_digest : var.container_image_tag}"
         essential : true
-        portMappings : [
+        portMappings : var.service_port > 0 ? [
           {
             hostPort : var.service_port
             protocol : "tcp"
             containerPort : var.service_port
           },
-        ]
+        ] : [],
         environment : [
           for k, v in var.environment : {
             name : k
