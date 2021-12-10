@@ -33,6 +33,9 @@ chmod +x /usr/local/bin/gitlab-runner
 echo "==> Generate template"
 mkdir -p /data
 cat << TEMPLATE > /data/template.toml
+concurrent = 5
+check_interval = 0
+
 [[runners]]
   [runners.docker]
     image = "alpine"
