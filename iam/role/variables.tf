@@ -29,3 +29,4 @@ variable "attach_policies" {
   default = []
 }
 variable "max_session_duration" { default = 3600 }
+variable "create_instance_profile" { default = false }

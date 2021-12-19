@@ -55,3 +55,17 @@ variable "lb_hosts" {
 }
 variable "lb_enable_www_redirect" { default = false }
 variable "lb_force_create_target_group" { default = false }
+variable "ecs_config_content" {
+  description = "Enables sidecar container with ECS Files Composer ans sets ECS_CONFIG_CONTENT env for that container"
+  default     = ""
+}
+variable "config_path" {
+  default = "/config"
+}
+variable "port_mappings" {
+  type    = list
+  default = null
+}
+variable "deployment_minimum_healthy_percent" {
+  default = 100
+}

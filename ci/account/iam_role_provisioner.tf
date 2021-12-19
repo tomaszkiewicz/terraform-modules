@@ -1,8 +1,8 @@
 locals {
-  provisioner_principals = concat(
-    list("arn:${data.aws_partition.current.partition}:iam::${var.master_aws_account_id}:user/ci-provisioner"),
+  provisioner_principals = flatten([
+    "arn:${data.aws_partition.current.partition}:iam::${var.master_aws_account_id}:user/ci-provisioner",
     var.provisioner_additional_principals,
-  )
+  ])
   sso_trust_policy = <<EOF
   ,
     {

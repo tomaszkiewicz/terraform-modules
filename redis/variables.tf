@@ -12,3 +12,4 @@ variable "transit_encryption_enabled" { default = false }
 variable "notifications_sns_topic_arn" { default = "" }
 variable "dns_zone_id" { default = "" }
 variable "dns_name" { default = "redis" }
+variable "auth_token" { default = null }

@@ -33,3 +33,19 @@ output "public_subnets_ids_az" {
 output "private_subnets_ids_az" {
   value = zipmap(local.sliced_azs, module.vpc.private_subnets)
 }
+
+output "vpc_main_route_table_id" {
+  value = module.vpc.vpc_main_route_table_id
+}
+
+output "main_route_table_id" {
+  value = module.vpc.vpc_main_route_table_id
+}
+
+output "public_route_table_ids" {
+  value = module.vpc.public_route_table_ids
+}
+
+output "private_route_table_ids" {
+  value = module.vpc.private_route_table_ids
+}

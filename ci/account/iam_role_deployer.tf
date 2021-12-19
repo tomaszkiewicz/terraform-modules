@@ -1,8 +1,8 @@
 locals {
-  deployer_principals = concat(
-    list("arn:${data.aws_partition.current.partition}:iam::${var.master_aws_account_id}:user/ci-deployer"),
+  deployer_principals = flatten([
+    "arn:${data.aws_partition.current.partition}:iam::${var.master_aws_account_id}:user/ci-deployer",
     var.deployer_additional_principals,
-  )
+  ])
 }
 
 module "ci_deployer" {
@@ -25,12 +25,12 @@ module "ci_deployer" {
   ]
 }
 EOF
-  policy = var.deployer_policy
+  policy             = var.deployer_policy
 }
 
 resource "aws_iam_role_policy" "additional" {
   count = var.deployer_additional_policy == "" ? 0 : 1
 
-  role = module.ci_deployer.name
+  role   = module.ci_deployer.name
   policy = var.deployer_additional_policy
 }

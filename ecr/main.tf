@@ -1,8 +1,8 @@
 locals {
-  repos = compact(concat(
-    tolist(var.name),
+  repos = compact(flatten([
+    var.name,
     var.names,
-  ))
+  ]))
 }
 
 resource "aws_ecr_repository" "repo" {

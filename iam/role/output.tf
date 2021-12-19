@@ -13,3 +13,7 @@ output "iam_role_name" {
 output "name" {
   value = aws_iam_role.role.name
 }
+
+output "instance_profile_arn" {
+  value = var.create_instance_profile ? aws_iam_instance_profile.profile[0].arn : ""
+}
