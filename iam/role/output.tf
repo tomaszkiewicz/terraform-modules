@@ -17,3 +17,7 @@ output "name" {
 output "instance_profile_arn" {
   value = var.create_instance_profile ? aws_iam_instance_profile.profile[0].arn : ""
 }
+
+output "instance_profile_id" {
+  value = var.create_instance_profile ? aws_iam_instance_profile.profile[0].id : ""
+}

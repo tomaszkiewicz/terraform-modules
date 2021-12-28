@@ -10,42 +10,59 @@ variable "provisioner_additional_principals" {
   ]
 }
 variable "deployer_policy" {
-  default = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
+  default = <<-EOF
     {
-      "Effect": "Allow",
-      "Action": [
-        "s3:*Object*",
-        "s3:*List*"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:PutImage",
-        "ecr:InitiateLayerUpload",
-        "ecr:UploadLayerPart",
-        "ecr:CompleteLayerUpload",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:BatchGetImage",
-        "ecr:GetAuthorizationToken"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "lambda:UpdateFunctionCode"
-      ],
-      "Resource": "*"
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:*Object*",
+            "s3:*List*"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:PutImage",
+            "ecr:InitiateLayerUpload",
+            "ecr:UploadLayerPart",
+            "ecr:CompleteLayerUpload",
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:BatchGetImage",
+            "ecr:GetAuthorizationToken"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ecs:DeregisterTaskDefinition",
+            "ecs:DescribeServices",
+            "ecs:DescribeTaskDefinition",
+            "ecs:DescribeTasks",
+            "ecs:ListTasks",
+            "ecs:ListTaskDefinitions",
+            "ecs:RegisterTaskDefinition",
+            "ecs:StartTask",
+            "ecs:StopTask",
+            "ecs:UpdateService",
+            "iam:PassRole"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:UpdateFunctionCode"
+          ],
+          "Resource": "*"
+        }
+      ]
     }
-  ]
-}
-EOF
+    EOF
 }
 
 variable "deployer_additional_policy" { default = "" }

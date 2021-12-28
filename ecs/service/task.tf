@@ -22,6 +22,7 @@ resource "aws_ecs_task_definition" "task" {
         name : var.service_discovery_container_name
         image : "${var.container_image}:${var.container_image_tag == "" ? data.aws_ecs_container_definition.existing[0].image_digest : var.container_image_tag}"
         essential : true
+        memory : var.memory // required e.g. for ecs-deploy script
         portMappings : var.port_mappings != null ? var.port_mappings : (var.service_port > 0 ? [
           {
             hostPort : var.service_port
@@ -95,6 +96,7 @@ resource "aws_ecs_task_definition" "task" {
       name : "ecs-file-composer"
       image : "public.ecr.aws/compose-x/ecs-files-composer"
       essential : false
+      memory : 50
       mountPoints : [
         {
           containerPath : var.config_path
