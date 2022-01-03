@@ -1,10 +1,10 @@
 resource "aws_ses_configuration_set" "configuration_set" {
-  name  = "complaint-set"
+  name   = var.product_prefix != "" ? "${var.product_prefix}-complaint-set" : "complaint-set"
   reputation_metrics_enabled = true
 }
 
 resource "aws_ses_event_destination" "cloudwatch" {
-  name                   = "event-complaint-destination-cloudwatch"
+  name                   = var.product_prefix != "" ? "${var.product_prefix}-event-complaint-destination-cloudwatch" : "event-complaint-destination-cloudwatch"
   configuration_set_name = aws_ses_configuration_set.configuration_set.name
   enabled                = true
   matching_types         = ["complaint", "bounce", "renderingFailure"]
@@ -17,7 +17,7 @@ resource "aws_ses_event_destination" "cloudwatch" {
 }
 
 resource "aws_ses_event_destination" "sns" {
-  name                   = "event-complaint-destination-sns"
+  name                   = var.product_prefix != "" ? "${var.product_prefix}-event-complaint-destination-cloudwatch" : "event-complaint-destination-cloudwatch"
   configuration_set_name = aws_ses_configuration_set.configuration_set.name
   enabled                = true
   matching_types         = ["complaint", "bounce", "renderingFailure"]
