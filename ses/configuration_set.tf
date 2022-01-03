@@ -17,7 +17,7 @@ resource "aws_ses_event_destination" "cloudwatch" {
 }
 
 resource "aws_ses_event_destination" "sns" {
-  name                   = var.product_prefix != "" ? "${var.product_prefix}-event-complaint-destination-cloudwatch" : "event-complaint-destination-cloudwatch"
+  name                   = var.product_prefix != "" ? "${var.product_prefix}-event-complaint-destination-sns" : "event-complaint-destination-sns"
   configuration_set_name = aws_ses_configuration_set.configuration_set.name
   enabled                = true
   matching_types         = ["complaint", "bounce", "renderingFailure"]
