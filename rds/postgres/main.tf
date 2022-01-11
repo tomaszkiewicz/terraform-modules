@@ -31,7 +31,7 @@ module "database" {
   port                                = var.port
 
   maintenance_window              = "Sat:00:00-Sat:03:00"
-  backup_window                   = "03:00-06:00"
+  backup_window                   = var.backup_window
   backup_retention_period         = var.backup_retention_period
   enabled_cloudwatch_logs_exports = var.cloudwatch_logs_exports
   subnet_ids                      = var.subnet_ids
