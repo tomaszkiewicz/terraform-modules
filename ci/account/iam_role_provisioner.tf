@@ -34,6 +34,13 @@ module "ci_provisioner" {
     {
       "Effect": "Allow",
       "Principal": {
+        "Service": "backup.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
         "AWS": [
           ${join(",", formatlist("\"%s\"", local.provisioner_principals))}
         ]
