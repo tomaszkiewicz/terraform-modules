@@ -38,6 +38,7 @@ module "database" {
   final_snapshot_identifier       = var.name
   deletion_protection             = var.deletion_protection
   publicly_accessible             = var.publicly_accessible
+  multi_az                        = var.multi_az
 }
 
 locals {
