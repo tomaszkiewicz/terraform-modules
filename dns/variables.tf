@@ -17,6 +17,7 @@ variable "caa_records" {
     "0 issuewild \"amazontrust.com\"",
     "0 issuewild \"awstrust.com\"",
     "0 issuewild \"letsencrypt.org\"",
+    "0 issue \"letsencrypt.org\"",
   ]
 }
 
