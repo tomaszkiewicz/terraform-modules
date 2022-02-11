@@ -1,4 +1,5 @@
 variable "domain_name" {}
+variable "additional_alias" {default = ""}
 variable "dns_zone_id" { default = "" }
 variable "certificate_arn" {}
 variable "versioning" { default = false }
