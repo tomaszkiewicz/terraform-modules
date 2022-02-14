@@ -12,7 +12,10 @@ resource "aws_cloudfront_distribution" "website" {
     }
   }
 
-  aliases = [var.domain_name, var.additional_alias]
+  aliases = var.additional_alias !="" ? flatten([var.domain_name, var.additional_alias]) : [for a in [
+    var.domain_name,
+    var.skip_www ? "" : format("%s%s", "www.", var.domain_name)
+  ] : a if a != ""]
 
   enabled             = true
   price_class         = "PriceClass_100"
