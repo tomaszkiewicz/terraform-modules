@@ -21,6 +21,10 @@ variable "secrets" {
   type    = map
   default = {}
 }
+variable "portMappings" {
+  default = {}
+  description = "Containers ports"
+}
 variable "health_check_path" { default = "/health" }
 variable "health_check_port" { default = "" } // uses service_port when not set
 variable "health_check_retries" { default = 3 }

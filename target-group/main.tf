@@ -32,4 +32,9 @@ resource "aws_lb_listener_rule" "service-rule" {
       values = var.host_header
     }
   }
+  condition {
+    path_pattern {
+      values = var.path_pattern
+    }
+  }
 }

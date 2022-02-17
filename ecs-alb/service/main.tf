@@ -93,11 +93,11 @@ resource "aws_ecs_task_definition" "task" {
         essential : true
         stopTimeout: 10
         portMappings : [
-          {
-            hostPort : var.service_port
-            protocol : "tcp"
-            containerPort : var.service_port
-          },
+          for k, v in var.portMappings : {
+            hostPort : v["hostPort"]
+            protocol : v["protocol"]
+            containerPort : v["containerPort"]
+        }
         ]
         environment : [
           for k, v in var.environment : {
