@@ -12,6 +12,20 @@ resource "aws_cloudfront_distribution" "website" {
     }
   }
 
+  dynamic "origin" {
+    for_each = var.cloudfront_origin_custom
+    content {
+      domain_name = origin.value["domain_name"]
+      origin_id   = origin.key
+      custom_origin_config {
+        http_port              = origin.value["http_port"]
+        https_port             = origin.value["https_port"]
+        origin_protocol_policy = origin.value["origin_protocol_policy"]
+        origin_ssl_protocols   = origin.value["origin_ssl_protocols"]
+      }
+    }
+  }
+
   aliases = var.additional_alias !="" ? flatten([var.domain_name, var.additional_alias]) : [for a in [
     var.domain_name,
     var.skip_www ? "" : format("%s%s", "www.", var.domain_name)
@@ -46,6 +60,24 @@ resource "aws_cloudfront_distribution" "website" {
       content {
         event_type = "viewer-request"
         lambda_arn = lambda_function_association.value
+      }
+    }
+  }
+
+  dynamic "ordered_cache_behavior" {
+    for_each = var.cloudfront_ordered_cache_behavior
+    content {
+      allowed_methods            = ordered_cache_behavior.value["allowed_methods"]
+      cached_methods             = ordered_cache_behavior.value["cached_methods"]
+      path_pattern               = ordered_cache_behavior.key
+      target_origin_id           = ordered_cache_behavior.value["target_origin_id"]
+      viewer_protocol_policy     = ordered_cache_behavior.value["viewer_protocol_policy"]
+      forwarded_values {
+        query_string = ordered_cache_behavior.value["forwarded_values_query_string"]
+        cookies {
+          forward = ordered_cache_behavior.value["forwarded_values_cookies_forward"]
+        }
+        headers = ordered_cache_behavior.value["forwarded_values_headers"]
       }
     }
   }

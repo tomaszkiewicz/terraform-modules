@@ -22,3 +22,11 @@ variable "lambda_viewer_request" { default = "" }
 locals {
   bucket_name = var.bucket_name == "" ? var.domain_name : var.bucket_name
 }
+variable "cloudfront_ordered_cache_behavior" {
+  default     = {}
+  description = "Ordered cache behavior dynamic pool"
+}
+variable "cloudfront_origin_custom" {
+  default     = {}
+  description = "Definition of origins with custom origin config"
+}
