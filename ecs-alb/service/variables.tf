@@ -22,7 +22,7 @@ variable "secrets" {
   default = {}
 }
 variable "portMappings" {
-  default = {}
+  default = []
   description = "Containers ports"
 }
 variable "health_check_path" { default = "/health" }
