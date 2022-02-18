@@ -27,9 +27,21 @@ resource "aws_lb_listener_rule" "service-rule" {
     type             = var.listener_action
     target_group_arn = aws_lb_target_group.service-tg.arn
   }
-    condition {
+
+  dynamic "condition" {
+    for_each = var.host_header != "" ? [var.host_header] : []
+    content {
     host_header {
-      values = var.host_header
+    values = condition.value
+      }
+    }
+  }
+  dynamic "condition" {
+    for_each = var.path_pattern != "" ? [var.path_pattern] : []
+    content {
+    path_pattern {
+    values = condition.value
+      }
     }
   }
 }
