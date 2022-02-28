@@ -25,3 +25,7 @@ output "bucket_arn" {
 output "bucket_id" {
   value = aws_s3_bucket.website.id
 }
+
+output "cloudfront_origin_access_identity_arn" {
+  value = aws_cloudfront_origin_access_identity.website.iam_arn
+}
