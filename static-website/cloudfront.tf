@@ -30,7 +30,7 @@ resource "aws_cloudfront_distribution" "website" {
     for_each = var.cloudfront_origin_s3
     content {
       domain_name = origin.value["domain_name"]
-      origin_id   = "s3"
+      origin_id   = origin.key
       s3_origin_config {
         origin_access_identity = aws_cloudfront_origin_access_identity.website.cloudfront_access_identity_path
       }
