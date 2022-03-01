@@ -25,7 +25,18 @@ resource "aws_cloudfront_distribution" "website" {
       }
     }
   }
-
+  
+  dynamic "origin" {
+    for_each = var.cloudfront_origin_s3
+    content {
+      domain_name = origin.value["domain_name"]
+      origin_id   = "s3"
+      s3_origin_config {
+        origin_access_identity = aws_cloudfront_origin_access_identity.website.cloudfront_access_identity_path
+      }
+    }
+  }
+  
   aliases = var.additional_alias !="" ? flatten([var.domain_name, var.additional_alias]) : [for a in [
     var.domain_name,
     var.skip_www ? "" : format("%s%s", "www.", var.domain_name)

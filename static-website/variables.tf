@@ -30,3 +30,7 @@ variable "cloudfront_origin_custom" {
   default     = {}
   description = "Definition of origins with custom origin config"
 }
+variable "cloudfront_origin_s3" {
+  default     = {}
+  description = "Definition of origins based on s3 buckets"
+}
