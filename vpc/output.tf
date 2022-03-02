@@ -33,3 +33,7 @@ output "public_subnets_ids_az" {
 output "private_subnets_ids_az" {
   value = zipmap(local.sliced_azs, module.vpc.private_subnets)
 }
+
+output "nat_gateway_public_ips" {
+  value = module.vpc.nat_public_ips
+}
