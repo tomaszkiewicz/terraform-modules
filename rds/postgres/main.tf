@@ -7,10 +7,10 @@ module "database" {
   parameter_group_name = var.name
   parameter_group_use_name_prefix = false
 
-  engine               = "postgres"
-  engine_version       = "11"
-  family               = "postgres11"
-  major_engine_version = "11"
+  engine               = var.engine
+  engine_version       = var.engine_version
+  family               = var.family
+  major_engine_version = var.major_engine_version
   apply_immediately    = var.apply_immediately
   snapshot_identifier  = var.snapshot_identifier
 
