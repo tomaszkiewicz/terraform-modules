@@ -28,3 +28,8 @@ variable "performance_insights_enabled" { default = true }
 variable "snapshot_identifier" { default = "" }
 variable "backup_window" { default = "03:00-06:00" }
 variable "multi_az" { default = false }
+variable "engine" { default = "postgres" }
+variable "engine_version" { default = 11 }
+variable "family" { default = "postgres11" }
+variable "major_engine_version" { default = 11 }
+
