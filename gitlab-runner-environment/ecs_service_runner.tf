@@ -1,11 +1,10 @@
 variable "gitlab_registration_token" {}
 variable "gitlab_runner_instance_type" { default = "c5.large" }
-variable "max_spot_price" { default = "0.09" }
+variable "max_spot_price" { default = "0.11" }
+variable "concurrent_value" { default = "10"}
 variable "gitlab_runner_tags" {
   type = list
-  default = [
-    "dedicated",
-  ]
+  default = []
 }
 
 locals {
@@ -17,8 +16,7 @@ echo "==> Install docker"
 apk add --update docker
 
 echo "==> Install docker-machine"
-base=https://github.com/docker/machine/releases/download/v0.16.0 &&
-curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+curl -L https://gitlab-docker-machine-downloads.s3.amazonaws.com/main/docker-machine-Linux-x86_64 > /tmp/docker-machine &&
 sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &&
 chmod +x /usr/local/bin/docker-machine
 
@@ -33,7 +31,7 @@ chmod +x /usr/local/bin/gitlab-runner
 echo "==> Generate template"
 mkdir -p /data
 cat << TEMPLATE > /data/template.toml
-concurrent = 5
+concurrent = 1
 check_interval = 0
 
 [[runners]]
@@ -53,7 +51,6 @@ check_interval = 0
       "amazonec2-tags=runner-manager-name,gitlab-aws-autoscaler,gitlab,true,gitlab-runner-autoscale,true",
       "amazonec2-request-spot-instance=true",
       "amazonec2-spot-price=${var.max_spot_price}",
-#      "amazonec2-block-duration-minutes=60"
     ]
 TEMPLATE
 
@@ -83,6 +80,10 @@ if [ ! -f /data/config.toml ]; then
     --locked=false
 fi
 
+echo "==> Fix register concurrent value"
+sudo sed -i "s/concurrent.*/concurrent = $CONCURRENT/" /data/config.toml
+
+  
 echo "==> Start runner"
 gitlab-runner run -c /data/config.toml
 EOF
@@ -166,6 +167,10 @@ resource "aws_ecs_task_definition" "gitlab_runner_manager" {
         {
           name : "REGISTER_NON_INTERACTIVE",
           value : "true",
+        },
+        {
+          name : "CONCURRENT",
+          value : var.concurrent_value,
         },
       ],
       mountPoints : [
