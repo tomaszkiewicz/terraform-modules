@@ -16,7 +16,8 @@ echo "==> Install docker"
 apk add --update docker
 
 echo "==> Install docker-machine"
-curl -L https://gitlab-docker-machine-downloads.s3.amazonaws.com/main/docker-machine-Linux-x86_64 > /tmp/docker-machine &&
+base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
 sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &&
 chmod +x /usr/local/bin/docker-machine
 
@@ -81,7 +82,7 @@ if [ ! -f /data/config.toml ]; then
 fi
 
 echo "==> Fix register concurrent value"
-sudo sed -i "s/concurrent.*/concurrent = $CONCURRENT/" /data/config.toml
+sed -i "s/concurrent.*/concurrent = $CONCURRENT/" /data/config.toml
 
   
 echo "==> Start runner"
