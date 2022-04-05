@@ -14,9 +14,10 @@ module "database" {
   apply_immediately    = var.apply_immediately
   snapshot_identifier  = var.snapshot_identifier
 
-  instance_class    = var.instance_class
-  allocated_storage = var.allocated_storage
-  parameters        = var.parameters
+  instance_class        = var.instance_class
+  allocated_storage     = var.allocated_storage
+  max_allocated_storage = var.max_allocated_storage
+  parameters            = var.parameters
 
   performance_insights_enabled = var.performance_insights_enabled
 
