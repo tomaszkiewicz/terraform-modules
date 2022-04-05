@@ -32,4 +32,5 @@ variable "engine" { default = "postgres" }
 variable "engine_version" { default = 11 }
 variable "family" { default = "postgres11" }
 variable "major_engine_version" { default = 11 }
+variable "max_allocated_storage" { default = 0 }
 
