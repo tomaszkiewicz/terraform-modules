@@ -16,9 +16,10 @@ aws sts get-caller-identity
 echo "==> Install docker"
 apk add --update docker
 
-echo "==> Install gitlab-runner"
-curl -L https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 > /usr/local/bin/gitlab-runner &&
-chmod +x /usr/local/bin/gitlab-runner
+echo "==> Install docker+machine"
+curl -O "https://gitlab-docker-machine-downloads.s3.amazonaws.com/v0.16.2-gitlab.12/docker-machine-Linux-x86_64"
+cp docker-machine-Linux-x86_64 /usr/local/bin/docker-machine
+chmod +x /usr/local/bin/docker-machine
 
 echo "==> Symlink configs for docker-machine"
 mkdir -p /data/docker
