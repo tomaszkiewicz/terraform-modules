@@ -2,6 +2,7 @@ variable "gitlab_registration_token" {}
 variable "gitlab_runner_instance_type" { default = "c5.large" }
 variable "max_spot_price" { default = "0.11" }
 variable "concurrent_value" { default = "10"}
+variable "runner_ami" {}
 variable "gitlab_runner_tags" {
   type = list
   default = []
@@ -15,11 +16,9 @@ aws sts get-caller-identity
 echo "==> Install docker"
 apk add --update docker
 
-echo "==> Install docker-machine"
-base=https://github.com/docker/machine/releases/download/v0.16.0 &&
-curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
-sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &&
-chmod +x /usr/local/bin/docker-machine
+echo "==> Install gitlab-runner"
+curl -L https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 > /usr/local/bin/gitlab-runner &&
+chmod +x /usr/local/bin/gitlab-runner
 
 echo "==> Symlink configs for docker-machine"
 mkdir -p /data/docker
@@ -50,6 +49,7 @@ check_interval = 0
     MachineOptions = [
       "amazonec2-use-private-address=true",
       "amazonec2-tags=runner-manager-name,gitlab-aws-autoscaler,gitlab,true,gitlab-runner-autoscale,true",
+      "amazonec2-ami=${var.runner_ami}",
       "amazonec2-request-spot-instance=true",
       "amazonec2-spot-price=${var.max_spot_price}",
     ]
@@ -66,6 +66,10 @@ if ! grep -q "$REGISTRATION_TOKEN" /data/token; then
   echo "==> Removing configuration"
   rm -fv /data/config.toml
 fi
+  
+echo "==> make sure that config is up to date"
+echo "" > /data/config.toml
+rm -f /data/config.toml
 
 echo "==> Register the runner if needed"
 if [ ! -f /data/config.toml ]; then
