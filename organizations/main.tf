@@ -12,6 +12,7 @@ resource "aws_organizations_organization" "main" {
     "sso.amazonaws.com",
     "cloudtrail.amazonaws.com",
     "config.amazonaws.com",
+    "macie.amazonaws.com",
   ]
 }
 
