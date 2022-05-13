@@ -15,3 +15,11 @@ module "cert" {
   zone_id                            = var.zone_id
   tags                               = var.tags
 }
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
