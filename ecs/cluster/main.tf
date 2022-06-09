@@ -1,5 +1,6 @@
 module "ecs" {
   source = "terraform-aws-modules/ecs/aws"
+  version = "3.5.0"
 
   name = var.cluster_name
 
