@@ -7,7 +7,9 @@ output "alb_listener_https_arn" {
 output "alb_target_group" {
   value = aws_lb_target_group.default.arn
 }
-
+output "arn" {
+  value = aws_lb.app_loadbalancer.arn
+}
 output "alb_dns_name" {
   value = aws_lb.app_loadbalancer.dns_name
 }
