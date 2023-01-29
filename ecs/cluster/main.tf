@@ -1,7 +1,7 @@
 module "ecs" {
   source = "terraform-aws-modules/ecs/aws"
 
-  cluster_name                          = var.cluster_name
+  cluster_name = var.cluster_name
 
   fargate_capacity_providers = {
     FARGATE_SPOT = {
@@ -9,6 +9,11 @@ module "ecs" {
         weight = 1
       }
     }
+  }
+
+  cluster_settings = {
+    name  = "containerInsights"
+    value = var.container_insights ? "enabled" : "disabled"
   }
 
   tags = {

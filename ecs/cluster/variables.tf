@@ -5,3 +5,6 @@ variable "service_discovery_namespace_type" {
   description = "none, public or private"
   default     = "none "
 }
+variable "container_insights" {
+  default = false
+}
